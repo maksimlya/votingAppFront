@@ -5,7 +5,8 @@ import { Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import Dropdown from './Dropdown/Dropdown';
 import Parse from 'parse';
 import { ValidatorForm } from 'react-form-validator-core';
-import TextValidator from '../TextValidator/TextValidator'
+import TextValidator from '../Validators/TextValidator'
+import DropdownValidator from '../Validators/DropdownValidator'
 
 
 class CreatePoll extends Component {
@@ -109,7 +110,7 @@ class CreatePoll extends Component {
                             placeholder="Enter poll name"
                             value={this.state.pollName}
                             validators={['required', 'minStringLength:4']}
-                            errorMessages={['this field is required', 'Poll Name Must Be Longer']}
+                            errorMessages={['This field is required', 'Poll Name Must Be Longer']}
                         />
                     </Form.Group>
                     <Form.Group controlId="formPollTag">
@@ -120,12 +121,19 @@ class CreatePoll extends Component {
                         placeholder="Enter poll tag"
                         value={this.state.pollTag}
                         validators={['required', 'minStringLength:2']}
-                        errorMessages={['this field is required', 'Poll Tag Must Be Longer']}
+                        errorMessages={['This field is required', 'Poll Tag Must Be Longer']}
                     />
                     </Form.Group>
                         <Form.Group controlId="formGroups">
                             <Form.Label><strong>Groups</strong></Form.Label>
-                            <Dropdown name="drop" items={this.state.grps} handleChange={this.handleGroupChange} />
+                            <DropdownValidator
+                                name="drop"
+                                value={this.state.group}
+                                validators={['required']}
+                                errorMessages={['Please Choose the poll group']}
+                                items={this.state.grps}
+                                handleChange={this.handleGroupChange}
+                            />
                         </Form.Group>
                     <Form.Group controlId="formPollDesc">
                         <Form.Label><strong>Poll Description</strong></Form.Label>
@@ -137,7 +145,7 @@ class CreatePoll extends Component {
                             rows="3"
                             value={this.state.pollDescription}
                             validators={['required', 'minStringLength:10']}
-                            errorMessages={['this field is required', 'Poll Description Must Be Longer']}
+                            errorMessages={['This field is required', 'Poll Description Must Be Longer']}
                         />
                     </Form.Group>
 

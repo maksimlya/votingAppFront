@@ -5,6 +5,7 @@ import { Table, Button } from 'react-bootstrap'
 
 const pollsList = (props) => {
     function Tablefunc({ data }) {
+        console.log(data)
         return (
             <Table bordered hover>
                 <thead>
@@ -29,12 +30,14 @@ const pollsList = (props) => {
                 <Cell data={num+1} />
                 <Cell data={data.name} />
                 <Cell data={data.tag} />
-                <Cell data={<Button as="input" type="button" value="View" onClick={this.props.pollDetailsHandler} / >}/>
+                {/*<Cell data={<Button as="input" type="button" value="View" onClick={this.props.pollDetailsHandler} />}/>       */}
             </tr>
         );
     }
 
+
     function Cell({ data }) {
+        console.log(data)
         return (
             <td>{data}</td>
         );
