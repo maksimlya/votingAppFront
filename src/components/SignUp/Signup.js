@@ -114,7 +114,7 @@ export default class Signup extends Component {
 
     handleGroupChange = (selectedOption) => {
         this.setState({ selectedOption });
-        //console.log(`Option selected:`, selectedOption);
+
 
     }
 
@@ -134,10 +134,6 @@ export default class Signup extends Component {
     // }
 
     handleSubmit = async event => {
-
-
-        console.log(this.state);
-
         event.preventDefault();
 
         this.setState({ isLoading: true });
@@ -172,9 +168,8 @@ export default class Signup extends Component {
 
         try {
             await Parse.User.logIn(this.state.username, this.state.password);
-            this.setState({isAuthenticated: true, user: Parse.User.current()});
-            // this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() });
-            // this.props.history.push("/");
+             this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() });
+             this.props.history.push("/statistics");
         } catch (e) {
             alert(e.message);
             this.setState({ isLoading: false });

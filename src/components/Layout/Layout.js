@@ -18,7 +18,6 @@ class Layout extends Component {
         });
     }
     render() {
-        console.log(this.props)
         return (
             <Fragment>
                 <Toolbar props={this.props.props} drawerToggleClicked={this.sideDrawerToggleHandler} />

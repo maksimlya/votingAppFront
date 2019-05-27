@@ -36,9 +36,8 @@ export default class Login extends Component {
 
         try {
             await Parse.User.logIn(this.state.username, this.state.password);
-            //this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() }); // lets app know that the user has logged in
-            this.setState({ isAuthenticated: true, user: Parse.User.current() })
-            //this.props.history.push("/");
+            this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() }); // lets app know that the user has logged in
+            this.props.history.push("/statistics");
         } catch (e) {
             alert(e.message);
             this.setState({ isLoading: false });

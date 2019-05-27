@@ -1,13 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import CreatePoll from '../../components/CreatePoll/CreatePoll';
-import ViewPoll from '../../components/ViewPoll/ViewPoll';
-import Statistics from '../../components/Statistics/Statistics';
 import Parse from 'parse';
-import { Link, withRouter } from "react-router-dom";
-import SignUp from '../../components/SignUp/Signup';
-import Login from '../../components/Login/Login';
+import { withRouter } from "react-router-dom";
 import Routes from '../../Routes'
-import { async } from 'q';
+
 
 Parse.serverURL = 'http://milky.ddns.net:8000/parse';
 Parse.initialize("POLLS", "BLOCKCHAIN");
@@ -38,9 +33,7 @@ class VotingLogic extends Component {
         console.log('[componentDidUpdate]');
     }
 
-    async componentWillMount(){
-        this.myPollsHandler();
-    }
+
 
     async componentDidMount() {
         try {
@@ -109,15 +102,7 @@ class VotingLogic extends Component {
         this.setState({ groups: group });
     }
 
-    myPollsHandler = async () => {
-        let myPolls =[]
-        console.log(Parse.User.current().get('username'))
 
-        myPolls = await Parse.Cloud.run('getMyPolls', null, Parse.User.current());
-        this.setState({polls: myPolls});
-        console.log(this.state.polls);
-        console.log(myPolls);
-    }
 
     userHasAuthenticated = params => {
         this.setState({ isAuthenticated: params.isAuthenticated,
@@ -144,6 +129,7 @@ class VotingLogic extends Component {
             removeOption: this.removeOptionHandler,
             submitted: this.createPollHandler,
             selectGroups: this.setGroup,
+
             poll: this.state.polls,
             getProps: this.props.getProps
 
