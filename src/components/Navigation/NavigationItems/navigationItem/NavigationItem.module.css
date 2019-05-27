@@ -6,6 +6,13 @@
     font-size: 18px;
 }
 
+li label{
+    position: relative;
+    margin-left: 140px;
+    width: auto;
+    font-size: 22px;
+}
+
 .NavigationItem a {
     color: #31708E;
     text-decoration: none;

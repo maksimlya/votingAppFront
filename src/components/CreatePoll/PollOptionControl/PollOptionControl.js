@@ -21,7 +21,6 @@ class pollOptionControl extends Component{
         <div className={styles.PollOptionControl}>
 
             <Form.Group controlId="formOptionName">
-                {console.log(this)}
                 <Form.Label><strong>Option name</strong></Form.Label>
                 <TextValidator
                     type="text"

@@ -36,7 +36,11 @@ class CreatePoll extends Component {
                 optDesc: "",
                 optImg: null
             }]
-        }
+        },
+        pollName: "",
+        pollTag: "",
+        groups: "",
+        pollDescription: ""
     }
 
     async componentDidMount() {
@@ -58,7 +62,6 @@ class CreatePoll extends Component {
     }
 
     handleChange = (e) => {
-        console.log(e.target)
         this.setState({[e.target.name]: e.target.value});
     }
 
