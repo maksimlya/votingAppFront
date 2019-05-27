@@ -70,12 +70,12 @@ export default class Signup extends Component {
             countryNames.push(option);
             return countryNames;
         });
-        let cities = await Parse.Cloud.run('getCities');
-        cities.map((val, idx) => {
-            let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
-            cityNames.push(option);
-            return cityNames;
-        });
+        // let cities = await Parse.Cloud.run('getCities');
+        // cities.map((val, idx) => {
+        //     let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
+        //     cityNames.push(option);
+        //     return cityNames;
+        // });
 
         religions.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }

@@ -4,6 +4,8 @@ import PollOptionControl from './PollOptionControl/PollOptionControl';
 import { Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import Dropdown from './Dropdown/Dropdown';
 import Parse from 'parse';
+import { ValidatorForm } from 'react-form-validator-core';
+import TextValidator from '../TextValidator/TextValidator'
 
 
 class CreatePoll extends Component {
@@ -56,6 +58,11 @@ class CreatePoll extends Component {
         this.setState({ group: selectedOption.value });
     }
 
+    handleChange = (e) => {
+        console.log(e.target)
+        this.setState({[e.target.name]: e.target.value});
+    }
+
     handleFormValidation = (event) => {
         // const updatedPoll = {
         //     ...this.state.poll
@@ -90,37 +97,83 @@ class CreatePoll extends Component {
         }
         return (
             <div className={styles.CreatePoll}>
-                <Form onChange={e => this.handleFormValidation(e)} onSubmit={e => this.props.submitted(e)}>
+                <ValidatorForm
+                    ref="form"
+                    onSubmit={e => this.props.submitted(e)}
+                >
                     <Form.Group controlId="formPollName">
                         <Form.Label><strong>Poll Name</strong></Form.Label>
-                        <Form.Control type="text" name="pollName" placeholder="Enter poll name" required/>
-                        {this.state.errors.password}
+                        <TextValidator
+                            onChange={this.handleChange}
+                            name="pollName"
+                            placeholder="Enter poll name"
+                            value={this.state.pollName}
+                            validators={['required', 'minStringLength:4']}
+                            errorMessages={['this field is required', 'Poll Name Must Be Longer']}
+                        />
                     </Form.Group>
                     <Form.Group controlId="formPollTag">
-                        <Form.Label><strong>Poll Tag</strong></Form.Label>
-                        <Form.Control type="text" name="pollTag" placeholder="Enter poll tag" required />
+                        <Form.Label><strong>Poll Name</strong></Form.Label>
+                    <TextValidator
+                        onChange={this.handleChange}
+                        name="pollTag"
+                        placeholder="Enter poll tag"
+                        value={this.state.pollTag}
+                        validators={['required', 'minStringLength:2']}
+                        errorMessages={['this field is required', 'Poll Tag Must Be Longer']}
+                    />
                     </Form.Group>
-                    <Form.Group controlId="formGroups">
-                        <Form.Label><strong>Groups</strong></Form.Label>
-                        <Dropdown items={this.state.grps} handleChange={this.handleGroupChange} />
-                        {/* <Form.Control type="text" name="groups" placeholder="Enter or select groups" required/> */}
-                    </Form.Group>
+                        <Form.Group controlId="formGroups">
+                            <Form.Label><strong>Groups</strong></Form.Label>
+                            <Dropdown name="drop" items={this.state.grps} handleChange={this.handleGroupChange} />
+                        </Form.Group>
                     <Form.Group controlId="formPollDesc">
                         <Form.Label><strong>Poll Description</strong></Form.Label>
-                        <Form.Control as="textarea" name="pollDescription" rows="3" placeholder="Enter poll summary description" required />
+                        <TextValidator
+                            onChange={this.handleChange}
+                            name="pollDescription"
+                            placeholder="Enter poll summary description"
+                            as="textarea"
+                            rows="3"
+                            value={this.state.pollDescription}
+                            validators={['required', 'minStringLength:10']}
+                            errorMessages={['this field is required', 'Poll Description Must Be Longer']}
+                        />
                     </Form.Group>
-                    <label><strong>Please start adding options for the poll</strong></label>
-                    <ButtonToolbar>
-                        <ButtonGroup aria-label="Basic example">
-                            <Button variant="success" onClick={this.props.addOption}>+</Button>
-                            <Button variant="danger" onClick={this.props.removeOption}>-</Button>
-                        </ButtonGroup>
-                    </ButtonToolbar>
-                    {options}
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
+
+                    <Button variant="primary" type="submit">Submit</Button>
+                </ValidatorForm>
+                {/*<Form onChange={e => this.handleFormValidation(e)} onSubmit={e => this.props.submitted(e)}>*/}
+                {/*    <Form.Group controlId="formPollName">*/}
+                {/*        <Form.Label><strong>Poll Name</strong></Form.Label>*/}
+                {/*        <Form.Control type="text" name="pollName" placeholder="Enter poll name" required/>*/}
+                {/*        {this.state.errors.password}*/}
+                {/*    </Form.Group>*/}
+                {/*    <Form.Group controlId="formPollTag">*/}
+                {/*        <Form.Label><strong>Poll Tag</strong></Form.Label>*/}
+                {/*        <Form.Control type="text" name="pollTag" placeholder="Enter poll tag" required />*/}
+                {/*    </Form.Group>*/}
+                {/*    <Form.Group controlId="formGroups">*/}
+                {/*        <Form.Label><strong>Groups</strong></Form.Label>*/}
+                {/*        <Dropdown items={this.state.grps} handleChange={this.handleGroupChange} />*/}
+                {/*        /!* <Form.Control type="text" name="groups" placeholder="Enter or select groups" required/> *!/*/}
+                {/*    </Form.Group>*/}
+                {/*    <Form.Group controlId="formPollDesc">*/}
+                {/*        <Form.Label><strong>Poll Description</strong></Form.Label>*/}
+                {/*        <Form.Control as="textarea" name="pollDescription" rows="3" placeholder="Enter poll summary description" required />*/}
+                {/*    </Form.Group>*/}
+                {/*    <label><strong>Please start adding options for the poll</strong></label>*/}
+                {/*    <ButtonToolbar>*/}
+                {/*        <ButtonGroup aria-label="Basic example">*/}
+                {/*            <Button variant="success" onClick={this.props.addOption}>+</Button>*/}
+                {/*            <Button variant="danger" onClick={this.props.removeOption}>-</Button>*/}
+                {/*        </ButtonGroup>*/}
+                {/*    </ButtonToolbar>*/}
+                {/*    {options}*/}
+                {/*    <Button variant="primary" type="submit">*/}
+                {/*        Submit*/}
+                {/*    </Button>*/}
+                {/*</Form>*/}
             </div>
         );
     }

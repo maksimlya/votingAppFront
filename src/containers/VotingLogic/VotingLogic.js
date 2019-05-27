@@ -43,7 +43,7 @@ class VotingLogic extends Component {
     componentDidMount() {
         (async () => {
             await Parse.User.logOut();
-            let usr = await Parse.User.logIn("Maks", "q1w2");
+            let usr = await Parse.User.logIn("Maks3", "q1w2");
             this.setState({ isAuthorized: true, user: usr });
         })();
     }

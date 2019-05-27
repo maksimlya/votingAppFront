@@ -14,3 +14,11 @@
 .CreatePoll button {
     float: right;
 }
+
+.CreatePoll input {
+    width: 100%;
+}
+
+#drop {
+    width: 50%
+}

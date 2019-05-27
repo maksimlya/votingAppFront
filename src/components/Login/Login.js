@@ -46,6 +46,8 @@ export default class Login extends Component {
     }
 
     componentDidMount() {
+        Parse.User.logOut();
+        Parse.User.logIn('Maks3','q1w2');
         console.log(Parse.User.current().get('username'));
     }
 
