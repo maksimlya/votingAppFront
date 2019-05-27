@@ -1,0 +1,24 @@
+.PollOptionControl {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    margin: 10px 0 10px 0;
+    box-sizing: border-box;
+    border: 1px solid #888888;
+    box-shadow: 5px 10px #888888;
+    border-radius: 5px;
+
+}
+.PollOptionControl form{
+    margin: 10px 0 10px 0;
+}
+
+#uploadLabel {
+    font-size: 9px;
+}
+
+@media(min-width: 500px) {
+    #uploadLabel {
+        font-size: 16px;
+    }
+}

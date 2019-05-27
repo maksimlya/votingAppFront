@@ -1,0 +1,129 @@
+import React, { Component } from 'react';
+import styles from './CreatePoll.module.css';
+import PollOptionControl from './PollOptionControl/PollOptionControl';
+import { Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import Dropdown from './Dropdown/Dropdown';
+import Parse from 'parse';
+
+
+class CreatePoll extends Component {
+    state = {
+        group: '',
+        grps: [],
+        colors: [
+            '#00B8D9', '#0052CC', '#5243AA', '#FF5630', '#FF8B00', '#FFC400', '#36B37E', '#00875A', '#253858', '#666666'
+        ],
+        poll: {
+            pollName: "",
+            pollTag: "",
+            groups: "",
+            pollDescription: "",
+            pollOpt: [{
+                optName: "",
+                optDesc: "",
+                optImg: null
+            }]
+        },
+        errors: {
+            pollName: "",
+            pollTag: "",
+            groups: "",
+            pollDescription: "",
+            pollOpt: [{
+                optName: "",
+                optDesc: "",
+                optImg: null
+            }]
+        }
+    }
+
+    async componentDidMount() {
+        let groups = await Parse.Cloud.run('getGroups');
+        console.log(groups);
+        let optionss = [];
+        groups.map((val, idx) => {
+            let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
+            optionss.push(option);
+            return optionss;
+        });
+        this.setState({ grps: optionss });
+
+
+    }
+
+    handleGroupChange = (selectedOption) => {
+        this.props.selectGroups(selectedOption.value);
+        this.setState({ group: selectedOption.value });
+    }
+
+    handleFormValidation = (event) => {
+        // const updatedPoll = {
+        //     ...this.state.poll
+        // };
+        // const errors = this.state.errors;
+        // if(event.target.name === pollName){}
+        // if(event.target.name === pollTag){}
+        // if(event.target.name === formPollDesc){}
+        // console.log(event.target.value.length);
+        // if (event.target.value.length > 5) {
+        //     console.log(event.target.isInvalid);
+        //     event.target.isInvalid = true;
+        //     console.log(event.target.isInvalid);
+        //     console.log("not good");
+        //     this.setState({errors: {...errors, name: "Password must be at least 6 characters"} });
+        // }
+        // updatedPoll['pollName'] = event.target.elements.pollName.value;
+        // updatedPoll['pollTag'] = event.target.elements.pollTag.value;
+        // updatedPoll['groups'] = this.state.groups;
+        // updatedPoll['pollDescription'] = event.target.elements.pollDescription.value;
+        // for (let i = 0; i < this.state.numberOfOptions; i++) {
+        //     updatedPoll['pollOpt'].splice(i, this.state.numberOfOptions, { optName: event.target.elements["optName" + (i + 1)].value, optDesc: event.target.elements["optDesc" + (i + 1)].value, optImg: event.target.elements["optImg" + (i + 1)].files[0] });
+        // }
+        // this.setState({ poll: updatedPoll });
+    }
+
+    render() {
+        let options = [];
+        for (let i = 0; i < this.props.numOfOpt; i++) {
+            options.splice(i, this.props.numOfOpt, <PollOptionControl key={i} index={i + 1} />);
+            //options.push(<PollOptionControl index={i+1}/>);
+        }
+        return (
+            <div className={styles.CreatePoll}>
+                <Form onChange={e => this.handleFormValidation(e)} onSubmit={e => this.props.submitted(e)}>
+                    <Form.Group controlId="formPollName">
+                        <Form.Label><strong>Poll Name</strong></Form.Label>
+                        <Form.Control type="text" name="pollName" placeholder="Enter poll name" required/>
+                        {this.state.errors.password}
+                    </Form.Group>
+                    <Form.Group controlId="formPollTag">
+                        <Form.Label><strong>Poll Tag</strong></Form.Label>
+                        <Form.Control type="text" name="pollTag" placeholder="Enter poll tag" required />
+                    </Form.Group>
+                    <Form.Group controlId="formGroups">
+                        <Form.Label><strong>Groups</strong></Form.Label>
+                        <Dropdown items={this.state.grps} handleChange={this.handleGroupChange} />
+                        {/* <Form.Control type="text" name="groups" placeholder="Enter or select groups" required/> */}
+                    </Form.Group>
+                    <Form.Group controlId="formPollDesc">
+                        <Form.Label><strong>Poll Description</strong></Form.Label>
+                        <Form.Control as="textarea" name="pollDescription" rows="3" placeholder="Enter poll summary description" required />
+                    </Form.Group>
+                    <label><strong>Please start adding options for the poll</strong></label>
+                    <ButtonToolbar>
+                        <ButtonGroup aria-label="Basic example">
+                            <Button variant="success" onClick={this.props.addOption}>+</Button>
+                            <Button variant="danger" onClick={this.props.removeOption}>-</Button>
+                        </ButtonGroup>
+                    </ButtonToolbar>
+                    {options}
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form>
+            </div>
+        );
+    }
+};
+
+export default CreatePoll;

@@ -1,0 +1,32 @@
+.Poll {
+    background-color: #eee;
+    width: 90%;
+    margin: auto;
+    border-radius: 15px;
+    overflow: auto;
+    text-align: center;
+}
+
+.Poll Label {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    margin: auto;
+}
+
+.PropsLabel {
+    font-size: 20px;
+    font-weight: 700;
+    background-color: white;
+    color: #be6837;
+    border: 1px solid gray;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.Cards{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    margin: 20px 20px 20px 20px;
+}

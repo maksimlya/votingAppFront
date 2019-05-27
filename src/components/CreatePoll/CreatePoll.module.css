@@ -1,0 +1,16 @@
+.CreatePoll {
+    background-color: #eee;
+    width: 90%;
+    height: 500px;
+    margin: auto;
+    border-radius: 15px;
+    overflow: auto;
+}
+
+.CreatePoll form {
+    padding: 0 5px 0 5px;
+}
+
+.CreatePoll button {
+    float: right;
+}
