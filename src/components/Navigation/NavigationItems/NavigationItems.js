@@ -8,9 +8,8 @@ class NavigationItems extends Component {
         return (
             <ul className={styles.NavigationItems}>
                 <NavigationItem link="/createPoll">Create Poll</NavigationItem>
-                <NavigationItem link="/">View Poll</NavigationItem>
-                <NavigationItem link="/">Statistics</NavigationItem>
-                <Routes />
+                <NavigationItem link="/viewPoll">View Poll</NavigationItem>
+                <NavigationItem link="/statistics">Statistics</NavigationItem>
             </ul>
         );
     }

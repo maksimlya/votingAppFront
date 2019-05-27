@@ -3,8 +3,10 @@ import CreatePoll from '../../components/CreatePoll/CreatePoll';
 import ViewPoll from '../../components/ViewPoll/ViewPoll';
 import Statistics from '../../components/Statistics/Statistics';
 import Parse from 'parse';
+import { Link, withRouter } from "react-router-dom";
 import SignUp from '../../components/SignUp/Signup';
 import Login from '../../components/Login/Login';
+import Routes from '../../Routes'
 import { async } from 'q';
 
 Parse.serverURL = 'http://milky.ddns.net:8000/parse';
@@ -105,22 +107,40 @@ class VotingLogic extends Component {
         console.log(myPolls);
     }
 
+
+
+
     render() {
+        const childProps = {
+            parse: Parse,
+            isAuthenticated: this.state.isAuthenticated,
+            user: this.state.user,
+            userHasAuthenticated: this.userHasAuthenticated,
+            numOfOpt: this.state.numberOfOptions,
+            addOption: this.addOptionHandler,
+            removeOption: this.removeOptionHandler,
+            submitted: this.createPollHandler,
+            selectGroups: this.setGroup,
+            poll: this.state.polls
+
+
+        };
         return (
             <Fragment>
-                <CreatePoll
-                    numOfOpt={this.state.numberOfOptions}
-                    addOption={this.addOptionHandler}
-                    removeOption={this.removeOptionHandler}
-                    submitted={this.createPollHandler}
-                    selectGroups={this.setGroup} />
-                <ViewPoll poll={this.state.polls} />
-                <Statistics />
-                <SignUp />
-                <Login />
+                {/*<CreatePoll*/}
+                {/*    numOfOpt={this.state.numberOfOptions}*/}
+                {/*    addOption={this.addOptionHandler}*/}
+                {/*    removeOption={this.removeOptionHandler}*/}
+                {/*    submitted={this.createPollHandler}*/}
+                {/*    selectGroups={this.setGroup} />*/}
+                {/*<ViewPoll poll={this.state.polls} />*/}
+                {/*<Statistics />*/}
+                {/*<SignUp />*/}
+                {/*<Login />*/}
+                <Routes childProps={childProps} />
             </Fragment>
         );
     }
 };
 
-export default VotingLogic;
+export default withRouter(VotingLogic);
