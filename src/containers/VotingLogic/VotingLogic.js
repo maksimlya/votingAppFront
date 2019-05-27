@@ -16,7 +16,9 @@ Parse.initialize("POLLS", "BLOCKCHAIN");
 class VotingLogic extends Component {
     state = {
         isAuthorized: false,
-        user: undefined,
+        isAuthenticated: false,
+        isAuthenticating: true,
+        user: null,
         poll: {
             pollName: "",
             pollTag: "",
@@ -37,17 +39,24 @@ class VotingLogic extends Component {
     }
 
     async componentWillMount(){
-        let usr = await Parse.User.logIn("Maks", "q1w2");
-        console.log("stam");
         this.myPollsHandler();
     }
 
-    componentDidMount() {
-        (async () => {
-            await Parse.User.logOut();
-            let usr = await Parse.User.logIn("Maks3", "q1w2");
-            this.setState({ isAuthorized: true, user: usr });
-        })();
+    async componentDidMount() {
+        try {
+            await Parse.Session.current();
+            this.userHasAuthenticated({isAuthenticated: true, user: Parse.User.current()});
+
+        }
+        catch(e) {
+            if (e !== 'No current user') {
+                console.log(e);
+            }
+        }
+
+        this.setState({ isAuthenticating: false });
+
+
     }
 
     addOptionHandler = () => {
@@ -101,13 +110,27 @@ class VotingLogic extends Component {
     }
 
     myPollsHandler = async () => {
-        const myPolls = await Parse.Cloud.run('getMyPolls', null, Parse.User.current());
+        let myPolls =[]
+        console.log(Parse.User.current().get('username'))
+
+        myPolls = await Parse.Cloud.run('getMyPolls', null, Parse.User.current());
         this.setState({polls: myPolls});
         console.log(this.state.polls);
         console.log(myPolls);
     }
 
+    userHasAuthenticated = params => {
+        this.setState({ isAuthenticated: params.isAuthenticated,
+            user: params.user
+        });
+    };
 
+    handleLogout = async event => {
+        await Parse.User.logOut();
+        this.userHasAuthenticated({isAuthenticated: false, user: null});
+        this.props.history.push("/login");
+
+    };
 
 
     render() {
@@ -121,22 +144,13 @@ class VotingLogic extends Component {
             removeOption: this.removeOptionHandler,
             submitted: this.createPollHandler,
             selectGroups: this.setGroup,
-            poll: this.state.polls
-
+            poll: this.state.polls,
+            getProps: this.props.getProps
 
         };
+
         return (
             <Fragment>
-                {/*<CreatePoll*/}
-                {/*    numOfOpt={this.state.numberOfOptions}*/}
-                {/*    addOption={this.addOptionHandler}*/}
-                {/*    removeOption={this.removeOptionHandler}*/}
-                {/*    submitted={this.createPollHandler}*/}
-                {/*    selectGroups={this.setGroup} />*/}
-                {/*<ViewPoll poll={this.state.polls} />*/}
-                {/*<Statistics />*/}
-                {/*<SignUp />*/}
-                {/*<Login />*/}
                 <Routes childProps={childProps} />
             </Fragment>
         );

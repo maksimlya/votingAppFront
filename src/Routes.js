@@ -4,12 +4,14 @@ import AppliedRoute from './components/AppliedRoute/AppliedRoute';
 import CreatePoll from './components/CreatePoll/CreatePoll';
 import ViewPoll from './components/ViewPoll/ViewPoll';
 import Statistics from './components/Statistics/Statistics';
+import Login from './components/Login/Login'
+import Signup from './components/SignUp/Signup'
 
 export default ({ childProps }) =>
     <Switch>
-        {/* <AppliedRoute path="/" exact component={Home} props={childProps} />
+        {/* <AppliedRoute path="/" exact component={Home} props={childProps} />*/}
         <AppliedRoute path="/login" exact component={Login} props={childProps} />
-        <AppliedRoute path="/signup" exact component={Signup} props={childProps} /> */}
+        <AppliedRoute path="/signup" exact component={Signup} props={childProps} />
         <AppliedRoute path="/statistics" exact component={Statistics} props={childProps} />
         <AppliedRoute path="/createPoll" exact component={CreatePoll} props={childProps} />
         {/* <AppliedRoute path="/castVote" exact component={CastVote} props={childProps} /> */}

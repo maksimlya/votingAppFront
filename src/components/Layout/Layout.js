@@ -18,10 +18,12 @@ class Layout extends Component {
         });
     }
     render() {
+        console.log(this.props)
         return (
             <Fragment>
-                <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
+                <Toolbar props={this.props.props} drawerToggleClicked={this.sideDrawerToggleHandler} />
                 <SideDrawer
+                    props={this.props.props}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerCloseHandler} />
                 <main className={styles.Content}>

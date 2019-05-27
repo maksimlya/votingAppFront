@@ -91,6 +91,7 @@ class CreatePoll extends Component {
     }
 
     render() {
+
         let options = [];
         for (let i = 0; i < this.props.numOfOpt; i++) {
             options.splice(i, this.props.numOfOpt, <PollOptionControl key={i} index={i + 1} />);
@@ -117,7 +118,7 @@ class CreatePoll extends Component {
                         />
                     </Form.Group>
                     <Form.Group controlId="formPollTag">
-                        <Form.Label><strong>Poll Name</strong></Form.Label>
+                        <Form.Label><strong>Poll Tag</strong></Form.Label>
                     <TextValidator
                         onChange={this.handleChange}
                         name="pollTag"
@@ -128,7 +129,7 @@ class CreatePoll extends Component {
                     />
                     </Form.Group>
                         <Form.Group controlId="formGroups">
-                            <Form.Label><strong>Groups</strong></Form.Label>
+                            <Form.Label><strong>Group</strong></Form.Label>
                             <DropdownValidator
                                 name="drop"
                                 value={this.state.group}
