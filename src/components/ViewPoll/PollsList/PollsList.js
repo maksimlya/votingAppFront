@@ -5,7 +5,7 @@ import { Table, Button } from 'react-bootstrap'
 
 const pollsList = (props) => {
     function Tablefunc({ data }) {
-        console.log(data)
+     //   console.log(data)
         return (
             <Table bordered hover>
                 <thead>
@@ -24,7 +24,7 @@ const pollsList = (props) => {
     }
 
     function Row({ data, num }) {
-        console.log(num);
+       // console.log(num);
         return (
             <tr>
                 <Cell data={num+1} />
@@ -37,7 +37,7 @@ const pollsList = (props) => {
 
 
     function Cell({ data }) {
-        console.log(data)
+    //    console.log(data)
         return (
             <td>{data}</td>
         );
