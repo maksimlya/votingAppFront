@@ -1,6 +1,5 @@
 import React from 'react';
 import { ValidatorComponent } from 'react-form-validator-core';
-import { Form } from "react-bootstrap";
 import Dropdown from '../CreatePoll/Dropdown/Dropdown';
 
 class DropdownValidator extends ValidatorComponent {

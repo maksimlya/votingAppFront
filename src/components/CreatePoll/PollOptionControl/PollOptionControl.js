@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import styles from './PollOptionControl.module.css';
 import { Form } from 'react-bootstrap';
-import { ValidatorForm } from 'react-form-validator-core';
 import TextValidator from '../../Validators/TextValidator'
 
 class pollOptionControl extends Component{

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import AppliedRoute from './components/AppliedRoute/AppliedRoute';
 import CreatePoll from './components/CreatePoll/CreatePoll';
 import ViewPoll from './components/ViewPoll/ViewPoll';

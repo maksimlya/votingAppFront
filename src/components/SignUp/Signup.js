@@ -3,16 +3,11 @@ import { Form, FormControl, FormLabel } from "react-bootstrap";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import styles from "./Signup.module.css";
 import Parse from "parse";
-import { colourStyles } from "../CreatePoll/Dropdown/constants";
-import Select from "react-select";
 import DatePicker from "../CreatePoll/DatePicker/DatePicker";
-import MyDropdown from "../CreatePoll/Dropdown/Dropdown";
 import { ValidatorForm } from 'react-form-validator-core';
 import TextValidator from '../Validators/TextValidator'
 import DropdownValidator from '../Validators/DropdownValidator'
-// Parse.serverURL = 'http://localhost:1337/parse';
-//
-// Parse.initialize("POLLS", "BLOCKCHAIN")
+
 
 const religions = ['Jewish', "Christian", "Muslim", "Other"];
 const genders = ['Male', 'Female'];

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './PollsList.module.css';
-import { Table, Button } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 
 
 const pollsList = (props) => {

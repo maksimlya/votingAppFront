@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout';
 import VotingLogic from './containers/VotingLogic/VotingLogic';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class App extends Component {
     constructor(props){

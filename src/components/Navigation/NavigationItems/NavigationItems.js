@@ -2,14 +2,24 @@ import React, { Component } from 'react';
 import styles from './NavigationItems.module.css';
 import NavigationItem from './navigationItem/navigationItem';
 import { Button} from "react-bootstrap";
-import Routes from '../../../Routes'
 import Parse from 'parse'
 
 class NavigationItems extends Component {
+    constructor(props){
+        super(props)
+        this.state={
 
-    componentDidMount() {
-        console.log(this.props.props)
+        }
+        this.active =  this.props.props.history.location.pathname
     }
+
+
+    componentDidUpdate() {
+        this.active =  this.props.props.history.location.pathname
+
+    }
+
+
 
     handleLogout = async event => {
         await Parse.User.logOut();
@@ -20,14 +30,26 @@ class NavigationItems extends Component {
     render() {
         return (
 
-            <ul className={styles.NavigationItems}>
-                <NavigationItem props={this.props.props} link="/createPoll">Create Poll</NavigationItem>
-                <NavigationItem props={this.props.props} link="/viewPoll">View Poll</NavigationItem>
-                <NavigationItem props={this.props.props} link="/statistics">Statistics</NavigationItem>
-                <NavigationItem props={this.props.props} link="/signup">Signup</NavigationItem>
-                <NavigationItem props={this.props.props} link="/login">Login</NavigationItem>
-                <Button onClick={this.handleLogout} variant="outline-info">Logout</Button>
-            </ul>
+                Parse.User.current() ?
+                    <ul className={styles.NavigationItems}>
+
+                        <NavigationItem active={this.active} props={this.props.props} link="/createPoll">Create Poll</NavigationItem>
+                        < NavigationItem active={this.active} props={this.props.props} link="/viewPoll">View Poll</NavigationItem>
+                        <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
+                        <Button onClick={this.handleLogout} variant="outline-info">Logout</Button>
+
+                    </ul>
+                    :
+                    <ul className={styles.NavigationItems}>
+                        <NavigationItem active={this.active} props={this.props.props} link="/createPoll">Create Poll</NavigationItem>
+                        <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
+                        <NavigationItem active={this.active} props={this.props.props} link="/signup">Signup</NavigationItem>
+                        <NavigationItem active={this.active} props={this.props.props} link="/login">Login</NavigationItem>
+
+
+                    </ul>
+
+
 
         );
     }

@@ -29,9 +29,6 @@ class VotingLogic extends Component {
         polls: []
     };
 
-    componentDidUpdate() {
-        console.log('[componentDidUpdate]');
-    }
 
 
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styles from './CreatePoll.module.css';
 import PollOptionControl from './PollOptionControl/PollOptionControl';
 import { Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
-import Dropdown from './Dropdown/Dropdown';
 import Parse from 'parse';
 import { ValidatorForm } from 'react-form-validator-core';
 import TextValidator from '../Validators/TextValidator'
@@ -42,7 +41,6 @@ class CreatePoll extends Component {
 
     async componentDidMount() {
         let groups = await Parse.Cloud.run('getGroups');
-        console.log(groups);
         let optionss = [];
         groups.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }

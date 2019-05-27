@@ -4,9 +4,7 @@ import Select from "react-select";
 
 
 export default class MyDropdown extends React.Component {
-            constructor(props){
-                super(props);
-            }
+
 
     render() {
                 if(this.props.multi)

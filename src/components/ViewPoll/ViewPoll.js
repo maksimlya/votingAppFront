@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import styles from './ViewPoll.module.css';
 import PollList from './PollsList/PollsList';
-import Poll from './Poll/Poll';
 import Parse from "parse";
 
 
