@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Form, FormControl, FormLabel } from "react-bootstrap";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import styles from "./Signup.module.css";
 import Parse from "parse";
@@ -7,6 +7,9 @@ import { colourStyles } from "../CreatePoll/Dropdown/constants";
 import Select from "react-select";
 import DatePicker from "../CreatePoll/DatePicker/DatePicker";
 import MyDropdown from "../CreatePoll/Dropdown/Dropdown";
+import { ValidatorForm } from 'react-form-validator-core';
+import TextValidator from '../Validators/TextValidator'
+import DropdownValidator from '../Validators/DropdownValidator'
 // Parse.serverURL = 'http://localhost:1337/parse';
 //
 // Parse.initialize("POLLS", "BLOCKCHAIN")
@@ -25,7 +28,7 @@ export default class Signup extends Component {
             password: "",
             confirmPassword: "",
             city: "",
-            birthDate: new Date(),
+            birthDate: new Date().toLocaleDateString('en-GB'),
             gender: "",
             country: "",
             religion: "",
@@ -33,7 +36,7 @@ export default class Signup extends Component {
             groups: [],
             newUser: null,
             selectedDay: undefined,
-            selectedOption: null,
+            selectedOption: [],
 
             date: new Date(),
             genders: [],
@@ -70,12 +73,12 @@ export default class Signup extends Component {
             countryNames.push(option);
             return countryNames;
         });
-        // let cities = await Parse.Cloud.run('getCities');
-        // cities.map((val, idx) => {
-        //     let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
-        //     cityNames.push(option);
-        //     return cityNames;
-        // });
+        let cities = await Parse.Cloud.run('getCities');
+        cities.map((val, idx) => {
+            let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
+            cityNames.push(option);
+            return cityNames;
+        });
 
         religions.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
@@ -111,7 +114,8 @@ export default class Signup extends Component {
 
     handleGroupChange = (selectedOption) => {
         this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
+        //console.log(`Option selected:`, selectedOption);
+
     }
 
     handleDayChange(day) {
@@ -139,6 +143,7 @@ export default class Signup extends Component {
         this.setState({ isLoading: true });
 
         let groups = [];
+
         for (let i of this.state.selectedOption) {
             groups.push(i.value);
         }
@@ -204,84 +209,129 @@ export default class Signup extends Component {
 
 
     renderForm() {
+        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+            if (value !== this.state.password) {
+                return false;
+            }
+            return true;
+        });
+        ValidatorForm.addValidationRule('isGroupsEmpty', () => {
+            if (this.state.selectedOption.length < 1) {
+                return false;
+            }
+            return true;
+        });
         return (
-            
-            <form onSubmit={this.handleSubmit} className={styles.Signup}>
-                <FormGroup controlId="username">
+
+                <ValidatorForm
+                    ref="form"
+                    onSubmit={this.handleSubmit}
+                    className={styles.Signup}
+                >
+                <Form.Group controlId="username">
                     <FormLabel>Username</FormLabel>
-                    <FormControl
+                    <TextValidator
                         autoFocus
+                        onChange={this.handleChange}
+                        name="username"
                         type="username"
+                        placeholder="Enter User Name"
                         value={this.state.username}
-                        onChange={this.handleChange}
+                        validators={['required', 'minStringLength:4']}
+                        errorMessages={['This field is required', 'User Name Must Be Longer']}
                     />
-                </FormGroup>
-                <FormGroup controlId="password" >
+
+                </Form.Group>
+                <Form.Group controlId="password" >
                     <FormLabel>Password</FormLabel>
-                    <FormControl
+                    <TextValidator
+                        onChange={this.handleChange}
+                        name="password"
+                        type="password"
+                        placeholder="Enter Password"
                         value={this.state.password}
-                        onChange={this.handleChange}
-                        type="password"
+                        validators={['required', 'minStringLength:4']}
+                        errorMessages={['This field is required', 'Password Must Be Longer']}
                     />
-                </FormGroup>
-                <FormGroup controlId="confirmPassword" >
+                </Form.Group>
+                <Form.Group controlId="confirmPassword" >
                     <FormLabel>Confirm Password</FormLabel>
-                    <FormControl
-                        value={this.state.confirmPassword}
+                    <TextValidator
                         onChange={this.handleChange}
+                        name="confimPassword"
                         type="password"
+                        placeholder="Confirm Password"
+                        value={this.state.confirmPassword}
+                        validators={['required', 'minStringLength:4','isPasswordMatch:'+this.state.confirmPassword]}
+                        errorMessages={['This field is required', 'Password Must Be Longer','Password Confirmation Must Match!']}
                     />
-                </FormGroup>
-                <FormGroup controlId="gender" >
+                </Form.Group>
+                <Form.Group controlId="gender" >
                     <FormLabel>Gender</FormLabel>
-                    {/*<FormControl*/}
-                    {/*    value={this.state.gender}*/}
-                    {/*    onChange={this.handleChange}*/}
-                    {/*    type="text"*/}
-                    {/*/>*/}
-                    <MyDropdown handleChange={this.handleGenderChange} items={this.state.genders} />
-                </FormGroup>
-                <FormGroup controlId="birthDate" >
+                    <DropdownValidator
+                        name="gender"
+                        value={this.state.gender}
+                        validators={['required']}
+                        errorMessages={['Please Choose the Gender!']}
+                        items={this.state.genders}
+                        handleChange={this.handleGenderChange}
+                    />
+                </Form.Group>
+                <Form.Group controlId="birthDate" >
                     <FormLabel>Birth Date</FormLabel>
                     <DatePicker selected={this.state.date} handleDayChange={this.handleDayChange} />
-                </FormGroup>
-                <FormGroup controlId="country" >
+                </Form.Group>
+                <Form.Group controlId="country" >
                     <FormLabel>Country</FormLabel>
-                    <MyDropdown handleChange={this.handleCountryChange} items={this.state.countries} />
-                </FormGroup>
-                <FormGroup controlId="city" >
+                    <DropdownValidator
+                        name="country"
+                        value={this.state.country}
+                        validators={['required']}
+                        errorMessages={['Please Choose the Country!']}
+                        items={this.state.countries}
+                        handleChange={this.handleCountryChange}
+                    />
+                </Form.Group>
+                <Form.Group controlId="city" >
                     <FormLabel>City</FormLabel>
-                    {/*<FormControl*/}
-                    {/*    value={this.state.city}*/}
-                    {/*    onChange={this.handleChange}*/}
-                    {/*    type="text"*/}
-                    {/*/>*/}
-                    <MyDropdown handleChange={this.handleCityChange} items={this.state.cities} />
-                </FormGroup>
-                <FormGroup controlId="religion" >
+                    <DropdownValidator
+                        name="city"
+                        value={this.state.city}
+                        validators={['required']}
+                        errorMessages={['Please Choose the City!']}
+                        items={this.state.cities}
+                        handleChange={this.handleCityChange}
+                    />
+                </Form.Group>
+                <Form.Group controlId="religion" >
                     <FormLabel>Religion</FormLabel>
-                    {/*<FormControl*/}
-                    {/*    value={this.state.religion}*/}
-                    {/*    onChange={this.handleChange}*/}
-                    {/*    type="text"*/}
-                    {/*/>*/}
-                    <MyDropdown handleChange={this.handleReligionChange} items={this.state.religions} />
-                </FormGroup>
+                    <DropdownValidator
+                        name="religion"
+                        value={this.state.religion}
+                        validators={['required']}
+                        errorMessages={['Please Choose the Religion!']}
+                        items={this.state.religions}
+                        handleChange={this.handleReligionChange}
+                    />
+                </Form.Group>
                 <FormLabel>Groups</FormLabel>
-                <Select
-                    closeMenuOnSelect={false}
-                    isMulti
-                    onChange={this.handleGroupChange}
-                    options={this.state.colourOptions}
-                    styles={colourStyles} />
-                <FormGroup controlId="secret" >
+                    <DropdownValidator
+                        multi={true}
+                        name="religion"
+                        value={this.state.selectedOption}
+                        validators={['isGroupsEmpty']}
+                        errorMessages={['Please Choose At Least One Group!']}
+                        items={this.state.colourOptions}
+                        handleChange={this.handleGroupChange}
+                    />
+                <Form.Group controlId="secret" >
                     <FormLabel>Secret</FormLabel>
                     <FormControl
                         value={this.state.secret}
                         onChange={this.handleChange}
                         type="password"
                     />
-                </FormGroup>
+                </Form.Group>
                 <LoaderButton
                     block
 
@@ -291,7 +341,7 @@ export default class Signup extends Component {
                     text="Signup"
                     loadingText="Signing up…"
                 />
-            </form>
+                </ValidatorForm>
         );
     }
 

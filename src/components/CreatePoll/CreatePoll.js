@@ -96,13 +96,14 @@ class CreatePoll extends Component {
             options.splice(i, this.props.numOfOpt, <PollOptionControl key={i} index={i + 1} />);
             //options.push(<PollOptionControl index={i+1}/>);
         }
+
+
         return (
+
             <div className={styles.CreatePoll}>
                 <ValidatorForm
                     ref="form"
-                    onSubmit={e => {
-                        console.log(e)
-                        this.props.submitted(e)}}
+                    onSubmit={e => {this.props.submitted(e)}}
                 >
                     <Form.Group controlId="formPollName">
                         <Form.Label><strong>Poll Name</strong></Form.Label>

@@ -6,11 +6,12 @@ import Dropdown from '../CreatePoll/Dropdown/Dropdown';
 class DropdownValidator extends ValidatorComponent {
 
     render() {
-        const { errorMessages, validators, requiredError, validatorListener, ...rest } = this.props;
+        const { errorMessages, validators, requiredError, validatorListener, multi, ...rest } = this.props;
 
         return (
             <div>
                 <Dropdown
+                    multi={this.props.multi}
                     {...rest}
                     ref={(r) => { this.input = r; }}
                 />

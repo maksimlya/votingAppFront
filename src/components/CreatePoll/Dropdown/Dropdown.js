@@ -4,17 +4,28 @@ import Select from "react-select";
 
 
 export default class MyDropdown extends React.Component {
-
+            constructor(props){
+                super(props);
+            }
 
     render() {
+                if(this.props.multi)
         return (
             <Select
-                closeMenuOnSelect={true}
+                isMulti
+                closeMenuOnSelect={false}
                 onChange={this.props.handleChange}
                 options={this.props.items}
                 styles = {colourStyles}
                 />
 
         );
+                else return (
+                    <Select
+                        onChange={this.props.handleChange}
+                        options={this.props.items}
+                        styles = {colourStyles}
+                    />
+                )
     }
 }
