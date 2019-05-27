@@ -17,8 +17,9 @@ const data = [{
 
 const viewPoll = (props) => (
   <Fragment>
-    <PollList data={data} />
-    <Poll pollData={props.poll}/>
+    {console.log(props)}
+    <PollList data={props.poll} />
+    {/* <Poll pollData={props.poll}/> */}
   </Fragment>
 );
 

@@ -26,13 +26,18 @@ class VotingLogic extends Component {
                 optImg: null
             }]
         },
-        numberOfOptions: 0
+        numberOfOptions: 0,
+        polls: []
     };
 
-    async componentDidUpdate() {
-        const myPolls = await Parse.Cloud.run('getMyPolls', null, Parse.User.current());
-        console.log(myPolls);
+    componentDidUpdate() {
         console.log('[componentDidUpdate]');
+    }
+
+    async componentWillMount(){
+        let usr = await Parse.User.logIn("Maks", "q1w2");
+        console.log("stam");
+        this.myPollsHandler();
     }
 
     componentDidMount() {
@@ -86,7 +91,6 @@ class VotingLogic extends Component {
         console.log(params);
         console.log(this.state.user);
         alert(await Parse.Cloud.run('createPoll', params, this.state.user));
-        
         // console.log('[VotingLogic] in createpollhandler');
     }
 
@@ -96,6 +100,8 @@ class VotingLogic extends Component {
 
     myPollsHandler = async () => {
         const myPolls = await Parse.Cloud.run('getMyPolls', null, Parse.User.current());
+        this.setState({polls: myPolls});
+        console.log(this.state.polls);
         console.log(myPolls);
     }
 
@@ -108,7 +114,7 @@ class VotingLogic extends Component {
                     removeOption={this.removeOptionHandler}
                     submitted={this.createPollHandler}
                     selectGroups={this.setGroup} />
-                <ViewPoll poll={this.state.poll} />
+                <ViewPoll poll={this.state.polls} />
                 <Statistics />
                 <SignUp />
                 <Login />
