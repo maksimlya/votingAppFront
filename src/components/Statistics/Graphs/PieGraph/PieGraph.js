@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
+import {Col} from 'react-bootstrap'
 
 const data = [
     { name: 'Group A', value: 400 },
     { name: 'Group B', value: 300 },
     { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
+    { name: 'Group D', value: 20 },
 ];
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
@@ -25,9 +26,45 @@ const renderCustomizedLabel = ({
     );
 };
 
-export default class PieGraph extends PureComponent {
-    static jsfiddleUrl = 'https://jsfiddle.net/alidingling/c9pL8k61/';
 
+export default class PieGraph extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            data: []
+        }
+    }
+
+
+    async componentDidMount() {
+        await this.loadData()
+
+    }
+
+    loadData(){
+        let tmp = new Map();
+
+        console.log(this.props.data)
+
+        for(let dat of this.props.data){
+            if(!tmp.get(dat))
+                tmp.set(dat,1);
+            else
+                tmp.set(dat,tmp.get(dat)+1)
+        }
+
+        if(this.props.data.length < 1)
+            tmp.set('None', 1)
+
+        // for(let i of choices){
+        //     if(!tmp.get(i))
+        //         tmp.set(i,0)
+        // }
+
+        this.setState({data:tmp});
+
+       // console.log(this.props.data)
+    }
     render() {
         return (
             <PieChart width={300} height={300}>
