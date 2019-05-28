@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, FormControl, FormLabel } from "react-bootstrap";
+import { Form, FormLabel } from "react-bootstrap";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import styles from "./Signup.module.css";
 import Parse from "parse";
@@ -316,10 +316,14 @@ export default class Signup extends Component {
                     />
                 <Form.Group controlId="secret" >
                     <FormLabel>Secret</FormLabel>
-                    <FormControl
-                        value={this.state.secret}
+                    <TextValidator
                         onChange={this.handleChange}
+                        name="secret"
                         type="password"
+                        placeholder="Enter Secret Value"
+                        value={this.state.secret}
+                        validators={['required', 'minStringLength:4']}
+                        errorMessages={['This field is required', 'Secret Value Must Be Longer']}
                     />
                 </Form.Group>
                 <LoaderButton

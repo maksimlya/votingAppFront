@@ -3,6 +3,11 @@
     margin: auto;
 }
 
+.Login input {
+    margin: 0 auto;
+    max-width: 320px;
+}
+
 @media all and (min-width: 480px) {
     .Login {
         padding: 60px 0;
