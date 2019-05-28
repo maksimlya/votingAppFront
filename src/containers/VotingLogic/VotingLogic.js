@@ -126,7 +126,6 @@ class VotingLogic extends Component {
             removeOption: this.removeOptionHandler,
             submitted: this.createPollHandler,
             selectGroups: this.setGroup,
-
             poll: this.state.polls,
             getProps: this.props.getProps
 

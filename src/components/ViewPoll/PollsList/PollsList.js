@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './PollsList.module.css';
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 
 
 const pollsList = (props) => {
     function Tablefunc({ data }) {
-     //   console.log(data)
         return (
             <Table bordered hover>
                 <thead>
@@ -17,27 +16,24 @@ const pollsList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((row, i) => <Row data={row} key={i} num={i}/>)}
+                    {data.map((row, i) => <Row data={row} key={i} num={i} />)}
                 </tbody>
             </Table>
         );
     }
 
     function Row({ data, num }) {
-       // console.log(num);
         return (
             <tr>
-                <Cell data={num+1} />
+                <Cell data={num + 1} />
                 <Cell data={data.name} />
                 <Cell data={data.tag} />
-                {/*<Cell data={<Button as="input" type="button" value="View" onClick={this.props.pollDetailsHandler} />}/>       */}
+                <Cell data={<Button as="input" type="button" value="View" onClick={() => props.pollDetails(data.tag)} />} />
             </tr>
         );
     }
 
-
     function Cell({ data }) {
-    //    console.log(data)
         return (
             <td>{data}</td>
         );
