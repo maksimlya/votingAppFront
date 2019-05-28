@@ -79,8 +79,14 @@ class VotingLogic extends Component {
         this.setState({ poll: updatedPoll });
 
         let choices = [];
-        for (let name of updatedPoll.pollOpt) {
-            choices.push(name.optName);
+        for (let opt of updatedPoll.pollOpt) {
+
+            let parseFile = new Parse.File(opt.optName+'.jpg', opt.optImg);
+            let f = await parseFile.save();
+
+            let pollOpt = {name:opt.optName,description: opt.optDesc, img: f};
+            choices.push(pollOpt);
+
         }
         let params = {
             name: updatedPoll.pollName,
@@ -89,7 +95,7 @@ class VotingLogic extends Component {
             desc: updatedPoll.pollDescription,
             group: updatedPoll.groups
         }
-        console.log(params);
+
         console.log(this.state.user);
         alert(await Parse.Cloud.run('createPoll', params, this.state.user));
         this.props.history.push('/statistics');
