@@ -13,7 +13,6 @@ class pollCard extends Component {
 
 
 
-
     render(){
             return (
                     <Card style={{width: '200px', margin: '5px'}}>

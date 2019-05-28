@@ -46,7 +46,21 @@ class ViewPoll extends Component {
     }
     console.log(singlepoll);
     console.log("=======");
-    this.setState({ selectedPoll: singlepoll });
+    let desc = Parse.Object.extend('ChoiceDescriptions');
+    let query = new Parse.Query(desc);
+    let opts = []
+    if(singlepoll)
+    for (let choice of singlepoll.choices) {
+      query.equalTo('choice', choice);
+      let res = await query.find();
+
+      let img = res[0].get('image');
+      opts.push({name: choice, link: img.url(), description: res[0].get('description')});
+    }
+
+    let pollData = {poll: singlepoll, opts: opts}
+
+    this.setState({ selectedPoll: pollData });
     this.purchaseHandler();
   }
 
@@ -71,30 +85,7 @@ class ViewPoll extends Component {
   }
 
 
-  async componentDidMount() {
-    console.log(this.state.pollData);
-    let polls = []
-    let opts = []
-    let desc = Parse.Object.extend('ChoiceDescriptions');
-    let query = new Parse.Query(desc);
 
-    for(let poll of this.state.polls) {
-      for (let choice of this.props.pollData.choices) {
-        query.equalTo('choice', choice);
-        let res = await query.find();
-
-        let img = res[0].get('image');
-        opts.push({name: choice, link: img.url(), description: res[0].get('description')});
-      }
-      polls.push({name: poll.name, desc:poll.desc, choices: poll.choices, opts: opts})
-    }
-    console.log(polls);
-    await this.setState({pollData: polls});
-    this.setState({dataLoaded: true})
-
-
-
-  }
 
   render() {
     return (
