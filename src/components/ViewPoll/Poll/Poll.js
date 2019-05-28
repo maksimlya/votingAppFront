@@ -27,7 +27,7 @@ class Poll extends Component {
                     </Form.Group>
                     <Form.Label style={{ fontSize: 'larger' }}><strong>Please choose one of the poll's options</strong></Form.Label>
                     <div className={styles.Cards}>
-                        {this.props.pollData.choices.map((el, i) => <PollCard data={el} key={i} choice={this.voted} voted={this.props.submitted}/>)}
+                        {this.props.pollData.choices.map((el, i) => <PollCard data={el} extra={this.props.pollData} key={i} choice={this.voted} voted={this.props.submitted}/>)}
                     </div>
                 </Form>
             </div>
