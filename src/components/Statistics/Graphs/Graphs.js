@@ -4,7 +4,7 @@ import PieGraph from './PieGraph/PieGraph';
 import {Col, Row, Form} from 'react-bootstrap'
 import TooltipGraph from './TooltipGraph/TooltipGraph';
 import LineGraph from './LineGraph/LineGraph';
-import PieChart from './PieGraph/PieChart'
+import CandleChart from './CandleChart/CandleChart'
 import Dropdown from '../../CreatePoll/Dropdown/Dropdown'
 import Parse from 'parse'
 
@@ -15,7 +15,10 @@ class Graphs extends Component {
             options : [],
             polls: [],
             pollId: 0,
-            citiesData: new Map(),
+            cityData: new Map(),
+            countryData: new Map(),
+            isLoading: true,
+            candleChartLoaded: false,
             colors: [
                 '#00B8D9', '#0052CC', '#5243AA', '#FF5630', '#FF8B00', '#FFC400', '#36B37E', '#00875A', '#253858', '#666666'
             ]
@@ -34,18 +37,24 @@ class Graphs extends Component {
 
         await this.setState({ options: optionss, polls: polls});
 
+        if(this.state.polls.length > 0) {
+            await this.loadCitiesData();
+            await this.loadCountriesData();
+        }
 
-        await this.loadCitiesData();
+        this.setState({candleChartLoaded:true})
 
-        console.log(this.state.cityData);
     }
 
     handleChange = async e => {
+        this.setState({candleChartLoaded:false})
+        await this.setState({isLoading: true});
+        await this.setState({pollId: e.id});
+        await this.setState({candleChartLoaded: true});
+        await this.loadCitiesData();
+        await this.loadCountriesData();
+        await this.setState({isLoading: false});
 
-        await this.setState({pollId: e.id})
-        await this.loadCitiesData()
-
-        console.log(this.state.cityData);
 
 
     };
@@ -86,6 +95,28 @@ class Graphs extends Component {
             await this.setState({cityData: cityData});
     }
 
+    async loadCountriesData(){
+        let countryData = new Map();
+        let users = Parse.Object.extend('User');
+
+
+        let choices =  this.state.polls[this.state.pollId].choices;
+        for(let choice of choices){
+            let countries = [];
+            if(this.state.polls[this.state.pollId].results.Voters[choice])
+                for(let pubKey of this.state.polls[this.state.pollId].results.Voters[choice]){
+                    let query = new Parse.Query(users);
+                    query.equalTo('pubKey', pubKey)
+                    let usr = await query.find();
+
+                    countries.push(usr[0].get('country'))
+                }
+            countryData.set(choice,countries);
+        }
+
+        await this.setState({countryData: countryData});
+    }
+
     render() {
         let users = Parse.Object.extend('User');
         var cities = new Map();
@@ -93,12 +124,19 @@ class Graphs extends Component {
         <div className={styles.Graphs}>
             <Dropdown items={this.state.options} handleChange={this.handleChange}/>
 
-            {this.state.cityData &&
+            {this.state.candleChartLoaded &&
+            <CandleChart data={this.state.polls[this.state.pollId]}/>
+            }
+            {!this.state.isLoading &&
+                <div>
+
+
+
             <Row>
 
 
                 { this.state.polls[this.state.pollId].choices.map( (val,id) => {
-                    return <PieGraph data={this.state.cityData.get(val)} key={id}/>
+                    return <Col key={id}><Form.Label>{val}</Form.Label><PieGraph data={this.state.cityData.get(val)}/></Col>
                 })
 
 
@@ -107,9 +145,22 @@ class Graphs extends Component {
 
 
 
-
-
             </Row>
+                    <Row>
+
+
+                        { this.state.polls[this.state.pollId].choices.map( (val,id) => {
+                            return <Col key={id}><Form.Label>{val}</Form.Label><PieGraph data={this.state.countryData.get(val)}/></Col>
+                        })
+
+
+
+                        }
+
+
+
+                    </Row>
+                </div>
             }
 
 

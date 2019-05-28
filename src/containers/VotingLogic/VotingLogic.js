@@ -92,7 +92,8 @@ class VotingLogic extends Component {
         console.log(params);
         console.log(this.state.user);
         alert(await Parse.Cloud.run('createPoll', params, this.state.user));
-        // console.log('[VotingLogic] in createpollhandler');
+        this.props.history.push('/statistics');
+
     }
 
     setGroup = (group) => {
