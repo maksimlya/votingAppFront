@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Card, Button} from 'react-bootstrap';
+import Parse from 'parse'
 import g from '../../../../assets/Images/g.png'
 
 class pollCard extends Component {
@@ -12,10 +13,15 @@ class pollCard extends Component {
         }
     }
 
-    componentDidMount() {
-
+    async componentDidMount() {
+        let desc = Parse.Object.extend('choiceDescriptions');
+        let query = new Parse.Query(desc);
         for(let choice of this.props.extra.choiceDetails){
             if(choice.name === this.state.name){
+                query.equalTo('choice', choice.name);
+                let res = await query.find()
+                //let img = res[0].get('image');
+                //this.setState({link: img.url(), description: choice.description});
                 this.setState({link: choice.img._url, description: choice.description});
             }
         }
