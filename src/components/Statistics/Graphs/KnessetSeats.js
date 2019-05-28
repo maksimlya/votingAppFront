@@ -1,7 +1,7 @@
 import Parse from "parse";
 import React, {Component} from "react";
 import './CandleChart/AllPolls.css'
-import CandleChart from "./CandleChart/CandleChart";
+import ElectionsChartDemo from "./CandleChart/ElectionsChartDemo";
 
 
 
@@ -39,7 +39,7 @@ export default class KnessetSeats extends Component {
     render() {
         return (
             <div className="bodyapp">
-                <CandleChart/>
+                <ElectionsChartDemo/>
 
             </div>
         );
