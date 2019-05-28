@@ -11,10 +11,12 @@ class ViewPoll extends Component {
     super(props)
     this.state = {
       polls: [],
+      pollData: [],
       selectedPoll: null,
       purchasing: true,
       isAuth: false,
-      showAuth: false
+      showAuth: false,
+      dataLoaded: false
     }
   }
 
@@ -35,6 +37,7 @@ class ViewPoll extends Component {
   pollDetailsHandler = async (tag) => {
     let params = { pollTag: tag }
     let polls = await Parse.Cloud.run('getAllResults', null, Parse.User.current());
+    console.log(polls);
     let singlepoll;
     for (let el of polls) {
       if (el.tag === tag) {
@@ -65,6 +68,32 @@ class ViewPoll extends Component {
     console.log(this.state);
     console.log(vote);
     console.log("========");
+  }
+
+
+  async componentDidMount() {
+    console.log(this.state.pollData);
+    let polls = []
+    let opts = []
+    let desc = Parse.Object.extend('ChoiceDescriptions');
+    let query = new Parse.Query(desc);
+
+    for(let poll of this.state.polls) {
+      for (let choice of this.props.pollData.choices) {
+        query.equalTo('choice', choice);
+        let res = await query.find();
+
+        let img = res[0].get('image');
+        opts.push({name: choice, link: img.url(), description: res[0].get('description')});
+      }
+      polls.push({name: poll.name, desc:poll.desc, choices: poll.choices, opts: opts})
+    }
+    console.log(polls);
+    await this.setState({pollData: polls});
+    this.setState({dataLoaded: true})
+
+
+
   }
 
   render() {
