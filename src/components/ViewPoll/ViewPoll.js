@@ -6,7 +6,7 @@ import VotingAuth from '../VotingAuth/VotingAuth';
 import Parse from "parse";
 import { async } from 'q';
 
-class viewPoll extends Component {
+class ViewPoll extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -20,6 +20,7 @@ class viewPoll extends Component {
 
   componentWillMount() {
     this.myPollsHandler();
+    console.log("in componentWillMount");
   }
 
   myPollsHandler = async () => {
@@ -42,7 +43,7 @@ class viewPoll extends Component {
     }
     console.log(singlepoll);
     console.log("=======");
-    this.setState({ selectedPoll: singlepoll});
+    this.setState({ selectedPoll: singlepoll });
     this.purchaseHandler();
   }
 
@@ -53,31 +54,30 @@ class viewPoll extends Component {
   purchaseCancelHandler = () => {
     this.setState({ purchasing: false });
   }
-  
-  voteHandler = (vote) => {
+
+  showAuthHandler = () => {
     this.setState({ showAuth: true });
+  }
+
+  voteHandler = (vote) => {
+    //this.purchaseCancelHandler();
+    this.showAuthHandler();
+    console.log(this.state);
     console.log(vote);
     console.log("========");
-  };
+  }
 
   render() {
     return (
       <Fragment>
         <PollList data={this.state.polls} pollDetails={this.pollDetailsHandler} />
-        {this.state.showAuth ?
           <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-            <VotingAuth />
+            {this.state.showAuth ? <VotingAuth /> : this.state.selectedPoll && <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />}
           </Modal>
-          :
-          this.state.selectedPoll &&
-          <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-            <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />
-          </Modal>
-        }
       </Fragment>
     );
   };
 
 }
 
-export default viewPoll;
+export default ViewPoll;
