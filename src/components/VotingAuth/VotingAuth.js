@@ -62,7 +62,7 @@ class VotingAuth extends Component {
     handleSubmit = async (event) => {
         let params = {
             tag: this.props.elementtag,
-            voteTarget: this.props.elementoptions[this.state.voteIndex],
+            voteTarget: this.props.elementoptions.name,
             username: this.state.username,
             password: this.state.password,
             country: Parse.User.current().get('country'),
@@ -73,13 +73,16 @@ class VotingAuth extends Component {
             secret: this.state.secret,
             pubKey: Parse.User.current().get('pubKey')
         };
-        let res = Parse.Cloud.run('sendVote', params, Parse.User.current()).then(func => {
-            console.log(func)
-        });
-        //todo history
+
+
+        console.log(params)
+        let res = await Parse.Cloud.run('sendVote', params, Parse.User.current());
+        alert(res);
         event.preventDefault();
         event.stopPropagation();
         this.setState({ validated: true });
+
+        this.props.props.history.push('/statistics');
     }
     render() {
         ValidatorForm.addValidationRule('isUsernameMatch', (value) => {
