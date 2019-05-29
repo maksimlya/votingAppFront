@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import VotingAuth from '../VotingAuth/VotingAuth';
 import Parse from "parse";
 import { async } from 'q';
+import { parse } from 'url';
 
 class ViewPoll extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class ViewPoll extends Component {
     this.state = {
       polls: [],
       pollData: [],
+      balance: [],
       selectedPoll: null,
       purchasing: false,
       isAuth: false,
@@ -30,12 +32,19 @@ class ViewPoll extends Component {
   }
 
   myPollsHandler = async () => {
-    let myPolls = []
+    let myPolls = [];
+    let balance = [];
     if (Parse.User.current())
       myPolls = await Parse.Cloud.run('getMyPolls', null, Parse.User.current());
+    for(let poll of myPolls){
+      let params = { pollTag: poll.tag }
+      console.log(params);
+      balance.push(await Parse.Cloud.run('getBalance', params, Parse.User.current()));
+    }
+    console.log(balance);
     console.log(myPolls);
     console.log("=======");
-    this.setState({ polls: myPolls });
+    this.setState({ polls: myPolls , balance: balance});
   }
 
   pollDetailsHandler = async (tag) => {
@@ -90,7 +99,7 @@ class ViewPoll extends Component {
   render() {
     return (
       <Fragment>
-        <PollList data={this.state.polls} pollDetails={this.pollDetailsHandler} />
+        <PollList data={this.state.polls} balance={this.state.balance} pollDetails={this.pollDetailsHandler} />
         {this.state.dataLoaded ? 
           <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
             {this.state.showAuth ? <VotingAuth elementtag={this.state.tag} elementoptions={this.state.name}/> : this.state.selectedPoll && <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />}

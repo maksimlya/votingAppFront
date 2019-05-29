@@ -40,7 +40,7 @@ const pollsList = (props) => {
     }
     return (
         <div className={styles.PollList}>
-            <Tablefunc data={props.data} />
+            <Tablefunc data={props.data} balance={props.balance}/>
         </div>
     );
 };
