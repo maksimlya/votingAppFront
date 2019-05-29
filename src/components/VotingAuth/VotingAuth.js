@@ -11,7 +11,6 @@ class VotingAuth extends Component {
         this.handleChangeFormValuePassword = this.handleChangeFormValuePassword.bind(this);
         this.handleChangeFormValueSecret = this.handleChangeFormValueSecret.bind(this);
 
-
         this.state = {
             username: '',
             userNameValid: false,
@@ -33,7 +32,6 @@ class VotingAuth extends Component {
         };
     }
     handleChangeFormValueUsername(event){
-
         this.setState({username: event.target.value });
     }
 

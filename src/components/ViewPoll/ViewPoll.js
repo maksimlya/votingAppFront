@@ -16,7 +16,9 @@ class ViewPoll extends Component {
       purchasing: true,
       isAuth: false,
       showAuth: false,
-      dataLoaded: false
+      dataLoaded: false,
+      tag : null,
+      name: null
     }
   }
 
@@ -53,14 +55,11 @@ class ViewPoll extends Component {
     for (let choice of singlepoll.choices) {
       query.equalTo('choice', choice);
       let res = await query.find();
-
       let img = res[0].get('image');
       opts.push({name: choice, link: img.url(), description: res[0].get('description')});
     }
-
     let pollData = {poll: singlepoll, opts: opts}
-
-    this.setState({ selectedPoll: pollData });
+    this.setState({ selectedPoll: pollData, dataLoaded: true, tag: tag});
     this.purchaseHandler();
   }
 
@@ -72,32 +71,25 @@ class ViewPoll extends Component {
     this.setState({ purchasing: false });
   }
 
-  showAuthHandler = () => {
-    this.setState({ showAuth: true });
-  }
-
   voteHandler = (vote) => {
-    //this.purchaseCancelHandler();
-    this.showAuthHandler();
+    this.setState({ showAuth: true, name: vote});
     console.log(this.state);
     console.log(vote);
     console.log("========");
   }
 
-
-
-
   render() {
     return (
       <Fragment>
         <PollList data={this.state.polls} pollDetails={this.pollDetailsHandler} />
+        {this.state.dataLoaded ? 
           <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-            {this.state.showAuth ? <VotingAuth /> : this.state.selectedPoll && <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />}
+            {this.state.showAuth ? <VotingAuth elementtag={this.state.tag} elementoptions={this.state.name}/> : this.state.selectedPoll && <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />}
           </Modal>
+        :null }
       </Fragment>
     );
   };
-
 }
 
 export default ViewPoll;
