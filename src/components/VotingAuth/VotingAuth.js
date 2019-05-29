@@ -73,14 +73,24 @@ class VotingAuth extends Component {
             secret: this.state.secret,
             pubKey: Parse.User.current().get('pubKey')
         };
+<<<<<<< HEAD
         console.log(params);
         let res = Parse.Cloud.run('sendVote', params, Parse.User.current()).then(func => {
             console.log(func)
         });
         //todo history
+=======
+
+
+        console.log(params)
+        let res = await Parse.Cloud.run('sendVote', params, Parse.User.current());
+        alert(res);
+>>>>>>> d88ce3af2c1f75f841ce06df6e7fbc427cad8b6b
         event.preventDefault();
         event.stopPropagation();
         this.setState({ validated: true });
+
+        this.props.props.history.push('/statistics');
     }
     render() {
         ValidatorForm.addValidationRule('isUsernameMatch', (value) => {

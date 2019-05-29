@@ -4,6 +4,10 @@ import Backdrop from '../Navigation/Backdrop/Backdrop';
 
 
 class Modal extends Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> d88ce3af2c1f75f841ce06df6e7fbc427cad8b6b
     componentDidMount(){
         console.log('[Modal] willUpdate');
     }

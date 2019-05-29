@@ -9,30 +9,36 @@ Parse.initialize("POLLS", "BLOCKCHAIN");
 
 
 class VotingLogic extends Component {
-    state = {
-        isAuthorized: false,
-        isAuthenticated: false,
-        isAuthenticating: true,
-        user: null,
-        poll: {
-            pollName: "",
-            pollTag: "",
-            groups: "",
-            pollDescription: "",
-            pollOpt: [{
-                optName: "",
-                optDesc: "",
-                optImg: null
-            }]
-        },
-        numberOfOptions: 0,
-        polls: []
-    };
+    constructor(props){
+        super(props)
+        this.state = {
+            isAuthorized: false,
+            isAuthenticated: false,
+            isAuthenticating: true,
+            user: null,
+            poll: {
+                pollName: "",
+                pollTag: "",
+                groups: "",
+                pollDescription: "",
+                pollOpt: [{
+                    optName: "",
+                    optDesc: "",
+                    optImg: null
+                }]
+            },
+            numberOfOptions: 0,
+            polls: []
+        };
+    }
+
 
 
 
 
     async componentDidMount() {
+
+
         try {
             await Parse.Session.current();
             this.userHasAuthenticated({isAuthenticated: true, user: Parse.User.current()});
@@ -81,11 +87,15 @@ class VotingLogic extends Component {
         let choices = [];
         for (let opt of updatedPoll.pollOpt) {
 
-            let parseFile = new Parse.File(opt.optName+'.jpg', opt.optImg);
-            let f = await parseFile.save();
+            if(opt.optName.length > 0) {
+                let parseFile = new Parse.File(opt.optName + '.jpg', opt.optImg);
+                let f = await parseFile.save();
 
-            let pollOpt = {name:opt.optName,description: opt.optDesc, img: f};
-            choices.push(pollOpt);
+                let pollOpt = {name: opt.optName, description: opt.optDesc, img: f};
+                choices.push(pollOpt);
+
+
+            }
 
         }
         let params = {

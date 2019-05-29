@@ -102,7 +102,7 @@ class ViewPoll extends Component {
         <PollList data={this.state.polls} balance={this.state.balance} pollDetails={this.pollDetailsHandler} />
         {this.state.dataLoaded ? 
           <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-            {this.state.showAuth ? <VotingAuth elementtag={this.state.tag} elementoptions={this.state.name}/> : this.state.selectedPoll && <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />}
+            {this.state.showAuth ? <VotingAuth props={this.props} elementtag={this.state.tag} elementoptions={this.state.name}/> : this.state.selectedPoll && <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />}
           </Modal>
         :null }
       </Fragment>
