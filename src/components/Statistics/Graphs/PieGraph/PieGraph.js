@@ -70,7 +70,6 @@ export default class PieGraph extends Component {
         data = temp;
 
         this.setState({isLoaded: true})
-       // console.log(this.props.data)
     }
     render() {
         return (

@@ -1,46 +1,33 @@
 import Parse from "parse";
-import React, {Component} from "react";
+import React, { Component } from "react";
 import './CandleChart/AllPolls.css'
 import ElectionsChartDemo from "./CandleChart/ElectionsChartDemo";
 
-
-
 export default class KnessetSeats extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-
         this.state = {
             dataLoaded: false,
             pollsData: null
         }
-
-
     }
 
     componentDidMount() {
-
         (async () => {
             let data = await this.dataLoaded();
-            this.setState({dataLoaded: true, pollsData: data})
+            this.setState({ dataLoaded: true, pollsData: data })
         })();
-
-
     }
 
-    async dataLoaded(){
+    async dataLoaded() {
         let pollsData = await Parse.Cloud.run('getAllResults');
-
         return pollsData;
-
     }
-
-
 
     render() {
         return (
             <div className="bodyapp">
-                <ElectionsChartDemo/>
-
+                <ElectionsChartDemo />
             </div>
         );
     }

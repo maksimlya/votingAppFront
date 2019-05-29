@@ -6,25 +6,20 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 
 class ElectionsChartDemo extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-
         this.options = {}
     }
 
     componentDidMount() {
-        console.log(this.props.data)
         this.compileData();
     }
 
-    async compileData(){
-
-
+    async compileData() {
         let data = this.props.data.results;
-
         let tmpPoints = []
-        for (let key in data.Results){   // TODO - testing here
-            let tmp = {label: key, y: data.Results[key]};    // Here too
+        for (let key in data.Results) {   // TODO - testing here
+            let tmp = { label: key, y: data.Results[key] };    // Here too
             tmpPoints.push(tmp);
         }
 
@@ -43,23 +38,12 @@ class ElectionsChartDemo extends Component {
         }
     }
 
-
-
     render() {
-
-
-
-
         return (
             <div className="CandleChart">
-                <CanvasJSChart options = {this.options}
+                <CanvasJSChart options={this.options}
                 />
             </div>
-
-
-
-
-
         );
     }
 }

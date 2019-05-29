@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Parse from "parse";
-import { Button, Modal, Form, Col, FormControl, InputGroup } from "react-bootstrap";
+import { Button, Form, Col } from "react-bootstrap";
 import { ValidatorForm } from 'react-form-validator-core';
 import TextValidator from '../Validators/TextValidator';
 
@@ -31,8 +31,9 @@ class VotingAuth extends Component {
             modalContents: []
         };
     }
-    handleChangeFormValueUsername(event){
-        this.setState({username: event.target.value });
+
+    handleChangeFormValueUsername(event) {
+        this.setState({ username: event.target.value });
     }
 
     handleChangeFormValueSecret(event) {
@@ -43,10 +44,7 @@ class VotingAuth extends Component {
         this.setState({ password: event.target.value });
     }
 
-
-    componentDidMount() {
-        console.log(this.state)
-    }
+    componentDidMount() {}
 
     validcondition() {
         if (this.state.username !== Parse.User.current().get('username'))
@@ -57,7 +55,6 @@ class VotingAuth extends Component {
             return false;
         return true;
     }
-
 
     handleSubmit = async (event) => {
         let params = {
@@ -73,25 +70,15 @@ class VotingAuth extends Component {
             secret: this.state.secret,
             pubKey: Parse.User.current().get('pubKey')
         };
-<<<<<<< HEAD
-        console.log(params);
-        let res = Parse.Cloud.run('sendVote', params, Parse.User.current()).then(func => {
-            console.log(func)
-        });
-        //todo history
-=======
 
-
-        console.log(params)
         let res = await Parse.Cloud.run('sendVote', params, Parse.User.current());
         alert(res);
->>>>>>> d88ce3af2c1f75f841ce06df6e7fbc427cad8b6b
         event.preventDefault();
         event.stopPropagation();
         this.setState({ validated: true });
-
         this.props.props.history.push('/statistics');
     }
+
     render() {
         ValidatorForm.addValidationRule('isUsernameMatch', (value) => {
             if (value !== Parse.User.current().get('username')) {

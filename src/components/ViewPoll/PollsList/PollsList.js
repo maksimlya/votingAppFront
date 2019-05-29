@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 
 
 const pollsList = (props) => {
-    function Tablefunc({ data }) {
+    function Tablefunc({ data, balance }) {
         return (
             <Table bordered hover>
                 <thead>
@@ -23,12 +23,18 @@ const pollsList = (props) => {
     }
 
     function Row({ data, num }) {
+        let button = null;
+        if (data.results.VoteBalance > 0) {
+            button = <Button as="input" type="button" value="Vote!" onClick={() => props.pollDetails(data.tag)} />
+        } else {
+            button = <Button as="input" title="You already voted for this poll, check results on statistics tab" type="button" value="Vote!" disabled onClick={() => props.pollDetails(data.tag)} />
+        }
         return (
             <tr>
                 <Cell data={num + 1} />
                 <Cell data={data.name} />
                 <Cell data={data.tag} />
-                <Cell data={<Button as="input" type="button" value="View" onClick={() => props.pollDetails(data.tag)} />} />
+                <Cell data={button} />
             </tr>
         );
     }
@@ -40,7 +46,7 @@ const pollsList = (props) => {
     }
     return (
         <div className={styles.PollList}>
-            <Tablefunc data={props.data} balance={props.balance}/>
+            <Tablefunc data={props.data} balance={props.balance} />
         </div>
     );
 };
