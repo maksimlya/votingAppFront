@@ -43,6 +43,11 @@ class VotingAuth extends Component {
         this.setState({ password: event.target.value });
     }
 
+
+    componentDidMount() {
+        console.log(this.state)
+    }
+
     validcondition() {
         if (this.state.username !== Parse.User.current().get('username'))
             return false;
@@ -77,6 +82,12 @@ class VotingAuth extends Component {
         this.setState({ validated: true });
     }
     render() {
+        ValidatorForm.addValidationRule('isUsernameMatch', (value) => {
+            if (value !== Parse.User.current().get('username')) {
+                return false;
+            }
+            return true;
+        });
         return (
             <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <Col sm={6}>

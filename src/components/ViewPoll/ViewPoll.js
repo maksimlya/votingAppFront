@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import {Button} from 'react-bootstrap'
 import PollList from './PollsList/PollsList';
 import Poll from './Poll/Poll';
 import Modal from '../Modal/Modal';
@@ -13,12 +14,13 @@ class ViewPoll extends Component {
       polls: [],
       pollData: [],
       selectedPoll: null,
-      purchasing: true,
+      purchasing: false,
       isAuth: false,
       showAuth: false,
       dataLoaded: false,
       tag : null,
-      name: null
+      name: null,
+      test: false
     }
   }
 
@@ -77,6 +79,13 @@ class ViewPoll extends Component {
     console.log(vote);
     console.log("========");
   }
+
+  handleClick = () => {
+    console.log(this.state.test)
+    this.setState({test: true})
+}
+
+
 
   render() {
     return (
