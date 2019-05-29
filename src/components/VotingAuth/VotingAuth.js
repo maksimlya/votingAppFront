@@ -11,7 +11,6 @@ class VotingAuth extends Component {
         this.handleChangeFormValuePassword = this.handleChangeFormValuePassword.bind(this);
         this.handleChangeFormValueSecret = this.handleChangeFormValueSecret.bind(this);
 
-
         this.state = {
             username: '',
             userNameValid: false,
@@ -43,6 +42,11 @@ class VotingAuth extends Component {
 
     handleChangeFormValuePassword(event) {
         this.setState({ password: event.target.value });
+    }
+
+
+    componentDidMount() {
+        console.log(this.state)
     }
 
     validcondition() {
@@ -79,6 +83,12 @@ class VotingAuth extends Component {
         this.setState({ validated: true });
     }
     render() {
+        ValidatorForm.addValidationRule('isUsernameMatch', (value) => {
+            if (value !== Parse.User.current().get('username')) {
+                return false;
+            }
+            return true;
+        });
         return (
             <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <Col sm={6}>
