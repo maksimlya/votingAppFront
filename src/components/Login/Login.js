@@ -37,7 +37,7 @@ export default class Login extends Component {
         try {
             await Parse.User.logIn(this.state.username, this.state.password);
             this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() }); // lets app know that the user has logged in
-            this.props.history.push("/statistics");
+            this.props.history.push("/mandats");
         } catch (e) {
             alert(e.message);
             this.setState({ isLoading: false });
@@ -69,7 +69,6 @@ export default class Login extends Component {
                     </FormGroup>
                     <LoaderButton
                         block
-
                         disabled={!this.validateForm()}
                         type="submit"
                         isLoading={this.state.isLoading}

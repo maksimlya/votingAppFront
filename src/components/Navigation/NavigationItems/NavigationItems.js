@@ -13,13 +13,10 @@ class NavigationItems extends Component {
         this.active = this.props.props.history.location.pathname
     }
 
-
     componentDidUpdate() {
         this.active = this.props.props.history.location.pathname
 
     }
-
-
 
     handleLogout = async event => {
         await Parse.User.logOut();
@@ -29,12 +26,9 @@ class NavigationItems extends Component {
 
     render() {
         return (
-
             Parse.User.current() ?
-
                 Parse.User.current().get('admin') ?
                     <ul className={styles.NavigationItems}>
-
                         <NavigationItem active={this.active} props={this.props.props} link="/createPoll">Create Poll</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/viewPoll">View Poll</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
@@ -42,27 +36,22 @@ class NavigationItems extends Component {
                         <NavigationItem active={this.active} props={this.props.props} link="/createGroup">Create Group</NavigationItem>
                         <li><Form.Label name="label"><strong>Welcome {Parse.User.current().get('username')}</strong></Form.Label></li>
                         <Button onClick={this.handleLogout} variant="outline-info">Logout</Button>
-
                     </ul>
                     :
                     <ul className={styles.NavigationItems}>
-
                         <NavigationItem active={this.active} props={this.props.props} link="/createPoll">Create Poll</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/viewPoll">View Poll</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/mandats">Knesset Seats</NavigationItem>
                         <li><Form.Label name="label"><strong>Welcome {Parse.User.current().get('username')}</strong></Form.Label></li>
                         <Button onClick={this.handleLogout} variant="outline-info">Logout</Button>
-
                     </ul>
                 :
                 <ul className={styles.NavigationItems}>
-                    <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
-                    <NavigationItem active={this.active} props={this.props.props} link="/mandats">Knesset Seats</NavigationItem>
-                    <NavigationItem active={this.active} props={this.props.props} link="/signup">Signup</NavigationItem>
+                    {/* <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
+                    <NavigationItem active={this.active} props={this.props.props} link="/mandats">Knesset Seats</NavigationItem> */}
                     <NavigationItem active={this.active} props={this.props.props} link="/login">Login</NavigationItem>
-
-
+                    <NavigationItem active={this.active} props={this.props.props} link="/signup">Signup</NavigationItem>
                 </ul>
 
 

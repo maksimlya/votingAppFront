@@ -164,7 +164,7 @@ export default class Signup extends Component {
         try {
             await Parse.User.logIn(this.state.username, this.state.password);
              this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() });
-             this.props.history.push("/statistics");
+             this.props.history.push("/mandats");
         } catch (e) {
             alert(e.message);
             this.setState({ isLoading: false });
