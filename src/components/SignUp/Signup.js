@@ -10,6 +10,9 @@ import DropdownValidator from '../Validators/DropdownValidator'
 
 
 const religions = ['Jewish', "Christian", "Muslim", "Other"];
+const countries = ['Israel', "Russia", "USA", "Ukraine"];
+const cities = ['Haifa', "Tel Aviv", "Netanya", "Hadera"];
+const groups = ['citizen', "afeka", "nokia", "microsoft"];
 const genders = ['Male', 'Female'];
 
 export default class Signup extends Component {
@@ -56,19 +59,20 @@ export default class Signup extends Component {
         let cityNames = [];
         let rels = [];
         let gens = [];
-        let grps = await Parse.Cloud.run('getGroups');
-        grps.map((val, idx) => {
+
+       // let grps = await Parse.Cloud.run('getGroups');
+        groups.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
             options.push(option);
             return options;
         });
-        let countries = await Parse.Cloud.run('getCountries');
+        //let countries = await Parse.Cloud.run('getCountries');
         countries.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
             countryNames.push(option);
             return countryNames;
         });
-        let cities = await Parse.Cloud.run('getCities');
+        //let cities = await Parse.Cloud.run('getCities');
         cities.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
             cityNames.push(option);
