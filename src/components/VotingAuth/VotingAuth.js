@@ -116,6 +116,7 @@ class VotingAuth extends Component {
                         <TextValidator
                             onChange={this.handleChangeFormValueSecret}
                             name="secret"
+                            type="password"
                             autoComplete="off"
                             placeholder={this.validcondition('secret') ? ' ' : this.state.error.secret}
                             value={this.state.secret}

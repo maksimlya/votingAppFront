@@ -7,6 +7,7 @@ import DatePicker from "../CreatePoll/DatePicker/DatePicker";
 import { ValidatorForm } from 'react-form-validator-core';
 import TextValidator from '../Validators/TextValidator'
 import DropdownValidator from '../Validators/DropdownValidator'
+import { statement } from "@babel/template";
 
 
 const religions = ['Jewish', "Christian", "Muslim", "Other"];
@@ -48,6 +49,9 @@ export default class Signup extends Component {
         };
     }
 
+    componentWillMount(){
+
+    }
     componentDidMount() {
         this.fillOptions();
 
@@ -59,19 +63,28 @@ export default class Signup extends Component {
         let cityNames = [];
         let rels = [];
         let gens = [];
+        let cunt = [];
 
-       // let grps = await Parse.Cloud.run('getGroups');
+        // let grps = await Parse.Cloud.run('getGroups');
         groups.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
             options.push(option);
             return options;
         });
         //let countries = await Parse.Cloud.run('getCountries');
-        countries.map((val, idx) => {
+        /*countries.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
             countryNames.push(option);
             return countryNames;
+        });*/
+
+        fetch('https://restcountries.eu/rest/v2/all').then(response => response.json()).then((jsonData) => {
+            jsonData.map( el => {
+                cunt.push(el.name);
+            })
         });
+        console.log(cunt);
+
         //let cities = await Parse.Cloud.run('getCities');
         cities.map((val, idx) => {
             let option = { value: val, label: val, color: this.state.colors[Math.floor(Math.random() * 10)] }
@@ -89,8 +102,7 @@ export default class Signup extends Component {
             gens.push(option);
             return gens;
         });
-
-        this.setState({ colourOptions: options, countries: countryNames, cities: cityNames, religions: rels, genders: gens })
+        this.setState({ colourOptions: options, countries: cunt, cities: cityNames, religions: rels, genders: gens })
     }
 
     validateForm() {
@@ -113,13 +125,10 @@ export default class Signup extends Component {
 
     handleGroupChange = (selectedOption) => {
         this.setState({ selectedOption });
-
-
     }
 
     handleDayChange(day) {
         this.setState({ date: day, birthDate: day.toLocaleDateString('en-GB') });
-
     }
 
     // handleSubmit = async event => {
@@ -134,15 +143,11 @@ export default class Signup extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-
         this.setState({ isLoading: true });
-
         let groups = [];
-
         for (let i of this.state.selectedOption) {
             groups.push(i.value);
         }
-
         try {
             const params = {
                 username: this.state.username,
@@ -159,16 +164,13 @@ export default class Signup extends Component {
             this.setState({
                 newUser
             });
-
-
         } catch (e) {
             alert(e.message);
         }
-
         try {
             await Parse.User.logIn(this.state.username, this.state.password);
-             this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() });
-             this.props.history.push("/mandats");
+            this.props.userHasAuthenticated({ isAuthenticated: true, user: Parse.User.current() });
+            this.props.history.push("/mandats");
         } catch (e) {
             alert(e.message);
             this.setState({ isLoading: false });
@@ -177,15 +179,11 @@ export default class Signup extends Component {
 
     handleConfirmationSubmit = async event => {
         event.preventDefault();
-
         this.setState({ isLoading: true });
-
-
     }
 
     handleCountryChange = (selectedOption) => {
         this.setState({ country: selectedOption.value });
-
     }
 
     handleCityChange = (selectedOption) => {
@@ -200,7 +198,6 @@ export default class Signup extends Component {
         this.setState({ gender: selectedOption.value });
 
     }
-
 
     renderForm() {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -217,11 +214,11 @@ export default class Signup extends Component {
         });
         return (
 
-                <ValidatorForm
-                    ref="form"
-                    onSubmit={this.handleSubmit}
-                    className={styles.Signup}
-                >
+            <ValidatorForm
+                ref="form"
+                onSubmit={this.handleSubmit}
+                className={styles.Signup}
+            >
                 <Form.Group controlId="username">
                     <FormLabel>Username</FormLabel>
                     <TextValidator
@@ -256,8 +253,8 @@ export default class Signup extends Component {
                         type="password"
                         placeholder="Confirm Password"
                         value={this.state.confirmPassword}
-                        validators={['required', 'minStringLength:4','isPasswordMatch:'+this.state.confirmPassword]}
-                        errorMessages={['This field is required', 'Password Must Be Longer','Password Confirmation Must Match!']}
+                        validators={['required', 'minStringLength:4', 'isPasswordMatch:' + this.state.confirmPassword]}
+                        errorMessages={['This field is required', 'Password Must Be Longer', 'Password Confirmation Must Match!']}
                     />
                 </Form.Group>
                 <Form.Group controlId="gender" >
@@ -309,15 +306,15 @@ export default class Signup extends Component {
                     />
                 </Form.Group>
                 <FormLabel>Groups</FormLabel>
-                    <DropdownValidator
-                        multi={true}
-                        name="religion"
-                        value={this.state.selectedOption}
-                        validators={['isGroupsEmpty']}
-                        errorMessages={['Please Choose At Least One Group!']}
-                        items={this.state.colourOptions}
-                        handleChange={this.handleGroupChange}
-                    />
+                <DropdownValidator
+                    multi={true}
+                    name="religion"
+                    value={this.state.selectedOption}
+                    validators={['isGroupsEmpty']}
+                    errorMessages={['Please Choose At Least One Group!']}
+                    items={this.state.colourOptions}
+                    handleChange={this.handleGroupChange}
+                />
                 <Form.Group controlId="secret" >
                     <FormLabel>Secret</FormLabel>
                     <TextValidator
@@ -332,14 +329,13 @@ export default class Signup extends Component {
                 </Form.Group>
                 <LoaderButton
                     block
-
                     disabled={!this.validateForm()}
                     type="submit"
                     isLoading={this.state.isLoading}
                     text="Signup"
                     loadingText="Signing up…"
                 />
-                </ValidatorForm>
+            </ValidatorForm>
         );
     }
 
