@@ -3,7 +3,7 @@ import Parse from 'parse';
 import { withRouter } from "react-router-dom";
 import Routes from '../../Routes'
 
-Parse.serverURL = 'http://milky.ddns.net:8000/parse';
+Parse.serverURL = 'http://localhost:1337/parse';
 Parse.initialize("POLLS", "BLOCKCHAIN");
 
 class VotingLogic extends Component {
