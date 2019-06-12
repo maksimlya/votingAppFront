@@ -30,8 +30,10 @@ const pollsList = (props) => {
         let button = null;
         if (data.results.VoteBalance > 0) {
             button = <Button as="input" type="button" value="Vote!" onClick={() => props.pollDetails(data.tag)} />
-        } else {
+        } else if (data.results.VoteTarget !== ""){
             button = <div>You voted for: {data.choices[data.results.VoteTarget]} <img width= "56px" src={data.img.url()}/></div>
+        } else {
+            button = <div>Too late to Vote in this poll</div>
         }
         return (
             <tr>

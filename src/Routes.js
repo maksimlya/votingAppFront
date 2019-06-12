@@ -14,6 +14,7 @@ export default ({ childProps }) =>
     <Switch>
         {/* <AppliedRoute path="/" exact component={Home} props={childProps} />*/}
         <AppliedRoute path="/login" exact component={Login} props={childProps} />
+        <AppliedRoute path="/" exact component={Login} props={childProps} />
         <AppliedRoute path="/signup" exact component={Signup} props={childProps} />
         <AppliedRoute path="/statistics" exact component={Statistics} props={childProps} />
         <AppliedRoute path="/createPoll" exact component={CreatePoll} props={childProps} />

@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout';
 import VotingLogic from './containers/VotingLogic/VotingLogic';
 import { withRouter } from "react-router-dom";
 
+
 class App extends Component {
   constructor(props){
       super(props);
@@ -14,7 +15,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Layout props={this.props}>
+          <Layout props={this.props}>
           <VotingLogic props={this.props} />
         </Layout>
       </div >
