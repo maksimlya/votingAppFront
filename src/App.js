@@ -4,13 +4,12 @@ import VotingLogic from './containers/VotingLogic/VotingLogic';
 import { withRouter } from "react-router-dom";
 
 class App extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            prop: null
-        }
-    }
-
+  constructor(props){
+      super(props);
+      this.state = {
+          prop: null
+      }
+  }
 
   render() {
     return (

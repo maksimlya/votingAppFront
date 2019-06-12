@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import styles from "./Login.module.css";
-import Parse from 'parse'
+import Parse from 'parse';
 
 // Parse.serverURL = 'http://localhost:1337/parse';
 //
@@ -43,8 +43,6 @@ export default class Login extends Component {
             this.setState({ isLoading: false });
         }
     }
-
-
 
     render() {
         return (

@@ -8,7 +8,7 @@ import { ValidatorForm } from 'react-form-validator-core';
 import TextValidator from '../Validators/TextValidator'
 import DropdownValidator from '../Validators/DropdownValidator'
 import { statement } from "@babel/template";
-
+import AllCountriesAndCities from 'all-countries-and-cities-json';
 
 const religions = ['Jewish', "Christian", "Muslim", "Other"];
 const countries = ['Israel', "Russia", "USA", "Ukraine"];
@@ -50,8 +50,9 @@ export default class Signup extends Component {
     }
 
     componentWillMount(){
-
+        console.log(AllCountriesAndCities['Israel']);
     }
+
     componentDidMount() {
         this.fillOptions();
 
@@ -82,7 +83,6 @@ export default class Signup extends Component {
             jsonData.map( el => {
                 let option = { value: el.name, label: el.name, color: this.state.colors[Math.floor(Math.random() * 10)] }
                 cunt.push(option);
-
             });
         });
 

@@ -11,7 +11,6 @@ class pollOptionControl extends Component{
         }
     }
 
-
     handleChange = (e) => {
         this.setState({value:e.target.value})
     }
@@ -19,9 +18,8 @@ class pollOptionControl extends Component{
     render() {
         return (
         <div className={styles.PollOptionControl}>
-
             <Form.Group controlId="formOptionName">
-                <Form.Label><strong>Option name</strong></Form.Label>
+                {/* <Form.Label><strong>Option name</strong></Form.Label> */}
                 <TextValidator
                     type="text"
                     onChange={this.handleChange}
@@ -31,11 +29,10 @@ class pollOptionControl extends Component{
                     validators={['required', 'minStringLength:4']}
                     errorMessages={['This field is required', 'Option Name Must Be Longer']}
                 />
-
             </Form.Group>
             <Form.Group controlId="formOptionDesc">
-                <Form.Label><strong>Option Description</strong></Form.Label>
-                <Form.Control as="textarea" name={"optDesc" + this.props.index} rows="3"
+                {/* <Form.Label><strong>Option Description</strong></Form.Label> */}
+                <Form.Control as="textarea" name={"optDesc" + this.props.index} rows="2"
                               placeholder="Enter option description"/>
             </Form.Group>
             <div className="input-group">

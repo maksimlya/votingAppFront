@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "all-countries-and-cities-json": "^1.0.0",
     "bootstrap": "^4.3.1",
     "chroma-js": "^2.0.3",
     "parse": "^2.4.0",
