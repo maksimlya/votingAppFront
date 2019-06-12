@@ -5,6 +5,8 @@ import { Table, Button } from 'react-bootstrap'
 
 const pollsList = (props) => {
     function Tablefunc({ data, balance }) {
+
+        console.log(data)
         return (
             <Table bordered hover>
                 <thead>
@@ -16,18 +18,20 @@ const pollsList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((row, i) => <Row data={row} key={i} num={i} />)}
+                    {data.map((row, i) => <Row style="vertical-align:middle" data={row} key={i} num={i} />)}
                 </tbody>
             </Table>
         );
     }
+
+
 
     function Row({ data, num }) {
         let button = null;
         if (data.results.VoteBalance > 0) {
             button = <Button as="input" type="button" value="Vote!" onClick={() => props.pollDetails(data.tag)} />
         } else {
-            button = <Button as="input" title="You already voted for this poll, check results on statistics tab" type="button" value="Vote!" disabled onClick={() => props.pollDetails(data.tag)} />
+            button = <div>You voted for: {data.choices[data.results.VoteTarget]} <img width= "56px" src={data.choiceDetails[data.results.VoteTarget].img.url()}/></div>
         }
         return (
             <tr>
@@ -36,17 +40,21 @@ const pollsList = (props) => {
                 <Cell data={data.tag} />
                 <Cell data={button} />
             </tr>
+
         );
     }
 
     function Cell({ data }) {
+        const rowAlign = {
+            verticalAlign: 'middle',
+        }
         return (
-            <td>{data}</td>
+            <td style={rowAlign}>{data}</td>
         );
     }
     return (
         <div className={styles.PollList}>
-            <Tablefunc data={props.data} balance={props.balance} />
+            <Tablefunc data={props.data} />
         </div>
     );
 };
