@@ -70,7 +70,7 @@ class Graphs extends Component {
                     let query = new Parse.Query(users);
                     query.equalTo('pubKey', pubKey)
                     let usr = await query.find();
-                    cities.push(usr[0].get('country'))
+                    cities.push(usr[0].get('city'))
                 }
             cityData.set(choice, cities);
         }
@@ -175,8 +175,8 @@ class Graphs extends Component {
                         </Row>
                     </div>
                 }
-                <TooltipGraph />
-                <LineGraph />
+                {/*<TooltipGraph />*/}
+                {/*<LineGraph />*/}
             </div>
         );
     }

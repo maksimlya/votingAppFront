@@ -78,12 +78,13 @@ export default class Signup extends Component {
             return countryNames;
         });*/
 
-        fetch('https://restcountries.eu/rest/v2/all').then(response => response.json()).then((jsonData) => {
+        await fetch('https://restcountries.eu/rest/v2/all').then(response => response.json()).then((jsonData) => {
             jsonData.map( el => {
-                cunt.push(el.name);
-            })
+                let option = { value: el.name, label: el.name, color: this.state.colors[Math.floor(Math.random() * 10)] }
+                cunt.push(option);
+
+            });
         });
-        console.log(cunt);
 
         //let cities = await Parse.Cloud.run('getCities');
         cities.map((val, idx) => {

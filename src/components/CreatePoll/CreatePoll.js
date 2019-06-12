@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import styles from './CreatePoll.module.css';
 import PollOptionControl from './PollOptionControl/PollOptionControl';
-import { Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import { Form, Button, ButtonToolbar, ButtonGroup, Col, Row } from 'react-bootstrap';
 import Parse from 'parse';
 import { ValidatorForm } from 'react-form-validator-core';
 import TextValidator from '../Validators/TextValidator'
 import DropdownValidator from '../Validators/DropdownValidator'
+
 
 
 class CreatePoll extends Component {
@@ -107,6 +108,8 @@ class CreatePoll extends Component {
                     ref="form"
                     onSubmit={e => {this.props.submitted(e)}}
                 >
+                    <Row>
+                    <Col>
                     <Form.Group controlId="formPollName">
                         <Form.Label><strong>Poll Name</strong></Form.Label>
                         <TextValidator
@@ -118,6 +121,8 @@ class CreatePoll extends Component {
                             errorMessages={['This field is required', 'Poll Name Must Be Longer']}
                         />
                     </Form.Group>
+                    </Col>
+                    <Col>
                     <Form.Group controlId="formPollTag">
                         <Form.Label><strong>Poll Tag</strong></Form.Label>
                     <TextValidator
@@ -129,7 +134,9 @@ class CreatePoll extends Component {
                         errorMessages={['This field is required', 'Poll Tag Must Be Longer']}
                     />
                     </Form.Group>
-                        <Form.Group controlId="formGroups">
+                    </Col>
+                    </Row>
+                        <Form.Group className={styles.Selector} controlId="formGroups">
                             <Form.Label><strong>Group</strong></Form.Label>
                             <DropdownValidator
                                 name="drop"

@@ -19,3 +19,10 @@
         flex-flow: row;
     }
 }
+
+.Table {
+    font-size: 10px;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+

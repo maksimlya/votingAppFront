@@ -1,7 +1,7 @@
 .CreatePoll {
     background-color: #eee;
-    width: 90%;
-    height: 500px;
+    width: 80%;
+    height: 70%;
     margin: auto;
     border-radius: 15px;
     overflow: auto;
@@ -16,7 +16,11 @@
 }
 
 .CreatePoll input {
-    width: 100%;
+    width: 90%;
+}
+
+.Selector{
+    width: 90%;
 }
 
 #drop {
