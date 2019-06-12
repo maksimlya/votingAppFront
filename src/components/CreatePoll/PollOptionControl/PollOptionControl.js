@@ -50,7 +50,7 @@ class pollOptionControl extends Component{
                         accept="image/png, image/jpeg"
                         name={"optImg" + this.props.index}
                     />
-                    <label id="uploadLabel" className="custom-file-label" htmlFor="inputGroupFile01">
+                    <label className="custom-file-label" htmlFor="inputGroupFile01">
                         Upload image
                     </label>
                 </div>

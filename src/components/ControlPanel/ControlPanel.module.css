@@ -13,5 +13,12 @@
     overflow: auto;
     height: 40px;
     margin: auto;
+    color:darkred;
+    font-family: "Open Sans", sans-serif;
 }
 
+.Code{
+    color:darkred;
+    font-family: "Open Sans", sans-serif;
+    font-style: italic;
+}
