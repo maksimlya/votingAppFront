@@ -47,7 +47,7 @@ const pollsList = (props) => {
     function Cell({ data }) {
         const rowAlign = {
             verticalAlign: 'middle',
-        }
+        };
         return (
             <td style={rowAlign}>{data}</td>
         );
