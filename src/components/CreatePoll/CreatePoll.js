@@ -167,7 +167,9 @@ class CreatePoll extends Component {
                             <Button variant="danger" onClick={this.props.removeOption}>-</Button>
                         </ButtonGroup>
                     </ButtonToolbar>
+                    <Col>
                     {options}
+                    </Col>
                     <Button variant="primary" type="submit">Submit</Button>
                 </ValidatorForm>
                         </div>
