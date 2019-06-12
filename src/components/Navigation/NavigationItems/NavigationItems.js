@@ -35,6 +35,7 @@ class NavigationItems extends Component {
                         <NavigationItem active={this.active} props={this.props.props} link="/viewPoll">View Poll</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/mandats">Knesset Seats</NavigationItem>
+                        <NavigationItem active={this.active} props={this.props.props} link="/control">Control Panel</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/createGroup">Create Group</NavigationItem>
                        <Form.Label name="label"><strong>Welcome {Parse.User.current().get('username')}</strong></Form.Label>
                         <Button onClick={this.handleLogout} variant="outline-info">Logout</Button>
@@ -46,7 +47,7 @@ class NavigationItems extends Component {
                         <NavigationItem active={this.active} props={this.props.props} link="/viewPoll">View Poll</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/statistics">Statistics</NavigationItem>
                         <NavigationItem active={this.active} props={this.props.props} link="/mandats">Knesset Seats</NavigationItem>
-
+                        <NavigationItem active={this.active} props={this.props.props} link="/control">Control Panel</NavigationItem>
                         <li><Form.Label name="label"><strong>Welcome {Parse.User.current().get('username')}</strong></Form.Label></li>
 
 

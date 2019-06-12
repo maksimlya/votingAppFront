@@ -1,0 +1,17 @@
+.Panel {
+    text-align: center;
+    border: 3px solid black;
+}
+
+.Text{
+    margin: auto;
+    width:40%
+}
+
+.Container{
+    width: 500px;
+    overflow: auto;
+    height: 40px;
+    margin: auto;
+}
+
