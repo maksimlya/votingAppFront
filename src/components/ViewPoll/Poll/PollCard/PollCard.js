@@ -7,6 +7,7 @@ class pollCard extends Component {
         this.state = {}
     }
 
+
     render() {
         return (
             <Card style={{ width: '200px', margin: '5px' }}>

@@ -31,7 +31,7 @@ const pollsList = (props) => {
         if (data.results.VoteBalance > 0) {
             button = <Button as="input" type="button" value="Vote!" onClick={() => props.pollDetails(data.tag)} />
         } else {
-            button = <div>You voted for: {data.choices[data.results.VoteTarget]} <img width= "56px" src={data.choiceDetails[data.results.VoteTarget].img.url()}/></div>
+            button = <div>You voted for: {data.choices[data.results.VoteTarget]} <img width= "56px" src={data.img.url()}/></div>
         }
         return (
             <tr>

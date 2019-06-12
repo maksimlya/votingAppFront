@@ -30,6 +30,20 @@ class ViewPoll extends Component {
     let myPolls = [];
     if (Parse.User.current())
       myPolls = await Parse.Cloud.run('getMyPolls', null, Parse.User.current());
+
+
+    for(let poll of myPolls){
+      if(poll.results.VoteTarget !== ""){
+        let desc = Parse.Object.extend('ChoiceDescriptions');
+        let query = new Parse.Query(desc);
+        query.equalTo('choice', poll.choices[poll.results.VoteTarget]);
+        let res = await query.find();
+        poll.img = res[0].get('image');
+
+      }
+    }
+
+
     this.setState({ polls: myPolls });
   }
 
@@ -72,10 +86,16 @@ class ViewPoll extends Component {
     this.setState({ test: true })
   }
 
+  fetchImages = () =>{
+
+  }
+
   render() {
     return (
       <Fragment>
-        <PollList data={this.state.polls} pollDetails={this.pollDetailsHandler} />
+
+        <PollList data={this.state.polls} pollDetails={this.pollDetailsHandler}/>
+
         {this.state.dataLoaded ?
           <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
             {this.state.showAuth ? <VotingAuth props={this.props} elementtag={this.state.tag} elementoptions={this.state.name} /> : this.state.selectedPoll && <Poll pollData={this.state.selectedPoll} submitted={this.voteHandler} />}
