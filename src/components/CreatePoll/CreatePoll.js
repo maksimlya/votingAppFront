@@ -78,6 +78,8 @@ class CreatePoll extends Component {
                 <ValidatorForm ref="form" onSubmit={e => {this.props.submitted(e)}}>
                     <Row>
                         <Col>
+                            <Row>
+                            <Col>
                             <Form.Group controlId="formPollName">
                                 {/* <Form.Label><strong>Poll Name</strong></Form.Label> */}
                                 <TextValidator
@@ -88,6 +90,9 @@ class CreatePoll extends Component {
                                     validators={['required', 'minStringLength:4']}
                                     errorMessages={['This field is required', 'Poll Name Must Be Longer']}/>
                             </Form.Group>
+                            </Col>
+                            <Col>
+
                             <Form.Group controlId="formPollTag">
                                 {/* <Form.Label><strong>Poll Tag</strong></Form.Label> */}
                                 <TextValidator
@@ -98,6 +103,8 @@ class CreatePoll extends Component {
                                     validators={['required', 'minStringLength:2']}
                                     errorMessages={['This field is required', 'Poll Tag Must Be Longer']}/>
                             </Form.Group>
+                            </Col>
+                            </Row>
                             <Form.Group className={styles.Selector} controlId="formGroups">
                                 {/* <Form.Label><strong>Group</strong></Form.Label> */}
                                 <DropdownValidator
@@ -115,7 +122,7 @@ class CreatePoll extends Component {
                                     name="pollDescription"
                                     placeholder="Enter poll summary description"
                                     as="textarea"
-                                    rows="3"
+                                    rows="2"
                                     value={this.state.pollDescription}
                                     validators={['required', 'minStringLength:10']}
                                     errorMessages={['This field is required', 'Poll Description Must Be Longer']}/>
