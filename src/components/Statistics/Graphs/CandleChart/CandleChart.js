@@ -16,25 +16,27 @@ class ElectionsChartDemo extends Component {
     }
 
     async compileData() {
-        let data = this.props.data.results;
-        let tmpPoints = []
-        for (let key in data.Results) {   // TODO - testing here
-            let tmp = { label: key, y: data.Results[key] };    // Here too
-            tmpPoints.push(tmp);
-        }
+        if(this.props.data) {
+            let data = this.props.data.results;
+            let tmpPoints = []
+            for (let key in data.Results) {   // TODO - testing here
+                let tmp = {label: key, y: data.Results[key]};    // Here too
+                tmpPoints.push(tmp);
+            }
 
-        this.options = {
-            animationEnabled: true,
-            exportEnabled: true,
-            theme: "light2", //"light1", "dark1", "dark2"
-            title: {
-                text: "Knesset Seats Distribution"
-            },
-            data: [{
-                type: "column",
-                dataPoints: tmpPoints
+            this.options = {
+                animationEnabled: true,
+                exportEnabled: true,
+                theme: "light2", //"light1", "dark1", "dark2"
+                title: {
+                    text: "Knesset Seats Distribution"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: tmpPoints
 
-            }]
+                }]
+            }
         }
     }
 

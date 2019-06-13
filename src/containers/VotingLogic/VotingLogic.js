@@ -90,7 +90,7 @@ class VotingLogic extends Component {
         }
 
         alert(await Parse.Cloud.run('createPoll', params, this.state.user));
-        this.props.history.push('/statistics');
+        this.props.history.push('/viewPoll');
     }
 
     setGroup = (group) => {

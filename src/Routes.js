@@ -18,7 +18,7 @@ export default ({ childProps }) =>
         <AppliedRoute path="/signup" exact component={Signup} props={childProps} />
         <AppliedRoute path="/statistics" exact component={Statistics} props={childProps} />
         <AppliedRoute path="/createPoll" exact component={CreatePoll} props={childProps} />
-        <AppliedRoute path="/mandats" exact component={KnessetSeats} props={childProps} />
+        <AppliedRoute path="/mandats" exact component={Statistics} props={childProps} />
         <AppliedRoute path="/control" exact component={ControlPanel} props={childProps} />
         {/* <AppliedRoute path="/castVote" exact component={CastVote} props={childProps} /> */}
         <AppliedRoute path="/createGroup" exact component={CreateGroup} props={childProps} />
